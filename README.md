@@ -77,6 +77,7 @@ numbers we've already counted, we get this sequence:
 ```sh
 python pprint_nonprime_sums_partitions.py 3
 ```
+⇣
 
 - _( n )_ _tᵢ_ = `Σ    ` = _i?_ ⇒ {**s**}
 ---
@@ -108,6 +109,7 @@ Taking some more terms (let's try 5) we can see this sequence continues:
 ```sh
 python pprint_nonprime_sums_partitions.py 5
 ```
+⇣
 
 - _( n )_ _tᵢ_ = `Σ        ` = _i?_ ⇒ {**s**}
 ---
@@ -183,6 +185,7 @@ Let's now try counting in powers of two, and let's show all of the values for th
 ```sh
 python pprint_powertwo_sums_partitions_all.py 5
 ```
+⇣
 
 - _( n )_ _tᵢ_ = `Σ         ` = _i?_ ⇒ {**s**}
 ---
@@ -229,6 +232,7 @@ We would get something like this instead if we changed the base sequence to {1,2
 ```sh
 python pprint_consec_sums_partitions_all.py 3
 ```
+⇣
 
 - _( n )_ _tᵢ_ = `Σ    ` = _i?_ ⇒ {**s**}
 ---
@@ -243,6 +247,7 @@ Well, we can still do that actually. Maybe it's fine to use consecutive numbers 
 ```sh
 python pprint_consec_sums_partitions_all.py 4 | tail -1
 ```
+⇣
 
 - _(n=3)_ _t₄_ = `1+2+3+4` = 10 ⇒ {1, 3, 6, 10, 4, 7, 11, 9, 13, 16, 10, 14, 17, 19, 20}
 
@@ -304,6 +309,7 @@ of sums _tᵢ_ (which equal _i?_):
 ```sh
 python pprint_combine_all_summands.py 5
 ```
+⇣
 
 - _( n )_ _tᵢ_ = `Σ         ` = _i?_ ⇒ {**s**}
 ---
@@ -318,6 +324,7 @@ To clarify this, the combinations of summands can be sorted and deduplicated:
 ```sh
 python pprint_combine_all_summands.py 5 --sort --unique
 ```
+⇣
 
 - _( n )_ _tᵢ_ = `Σ         ` = _i?_ ⇒ {**s**}
 ---
