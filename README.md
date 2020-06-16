@@ -77,14 +77,12 @@ numbers we've already counted, we get this sequence:
 ```sh
 python pprint_nonprime_sums_partitions.py 3
 ```
-⇣
-```STDOUT
+
 - _( n )_ _tᵢ_ = `Σ    ` = _i?_ ⇒ {**s**}
 ---
 - _(n=0)_ _t₁_ = `1    ` = 1 ⇒ {}
 - _(n=1)_ _t₂_ = `1+2  ` = 3 ⇒ {4}
 - _(n=2)_ _t₃_ = `1+2+3` = 6 ⇒ {7, 9, 10}
-```
 
 The first 3 `t` terms (i.e. the totals) are {1, 3, 6}. Note that we keep two
 separate indexing variables, _n_ (which begins at 0) and _i_ which begins at 1
@@ -111,7 +109,6 @@ Taking some more terms (let's try 5) we can see this sequence continues:
 python pprint_nonprime_sums_partitions.py 5
 ```
 
-```STDOUT
 - _( n )_ _tᵢ_ = `Σ        ` = _i?_ ⇒ {**s**}
 ---
 - _(n=0)_ _t₁_ = `1        ` = 1  ⇒ {}
@@ -119,7 +116,6 @@ python pprint_nonprime_sums_partitions.py 5
 - _(n=2)_ _t₃_ = `1+2+3    ` = 6  ⇒ {7, 9, 10}
 - _(n=3)_ _t₄_ = `1+2+3+4  ` = 10 ⇒ {11, 13, 16, 14, 17, 19, 20}
 - _(n=4)_ _t₅_ = `1+2+3+4+5` = 15 ⇒ {16, 18, 21, 25, 19, 22, 26, 24, 28, 31, 25, 29, 32, 34, 35}
-```
 
 The sequence becomes {0,1,3,7,15,...}. It is the sequence sometimes called
 Mersenne numbers, _Mₙ_ = `2ⁿ - 1` (though that name is usually reserved for
@@ -187,8 +183,7 @@ Let's now try counting in powers of two, and let's show all of the values for th
 ```sh
 python pprint_powertwo_sums_partitions_all.py 5
 ```
-⇣
-```STDOUT
+
 - _( n )_ _tᵢ_ = `Σ         ` = _i?_ ⇒ {**s**}
 ---
 - _(n=0)_ _t₁_ = `1         ` = 1  ⇒ {1}
@@ -196,7 +191,6 @@ python pprint_powertwo_sums_partitions_all.py 5
 - _(n=2)_ _t₃_ = `1+2+4     ` = 7  ⇒ {1, 3, 7, 4, 8, 10, 11}
 - _(n=3)_ _t₄_ = `1+2+4+8   ` = 15 ⇒ {1, 3, 7, 15, 4, 8, 16, 10, 18, 22, 11, 19, 23, 25, 26}
 - _(n=4)_ _t₅_ = `1+2+4+8+16` = 31 ⇒ {1, 3, 7, 15, 31, 4, 8, 16, 32, 10, 18, 34, 22, 38, 46, 11, 19, 35, 23, 39, 47, 25, 41, 49, 53, 26, 42, 50, 54, 56, 57}
-```
 
 The termial function here (the column labelled _i?_) clearly takes values in the sequence
 of Mersenne numbers _Mₙ_ = `2ⁿ - 1`. This is precisely the reason why Mersenne numbers
