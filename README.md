@@ -167,7 +167,7 @@ Revisit our natural number counting function from n=0 to n=4:
       - The number of possible combinations of _(n+1)_ items is the size of its powerset.
       - The size of a powerset is to the power of its order, so for n+1 items that is 2ⁿ⁺¹
       - The possible combinations of _(n+1)_ items here is therefore 2²:
-        - { {}, {_t₁_}, {_t₂_}, {_t₁_, _t₂_} } = { {}, {1}, {3}, {1, 3} }
+        - { `{}`, `{`_t₁_`}`, `{`_t₂_`}`, `{`_t₁_`,` _t₂_`}` } = { `{}`, `{1}`, `{3}`, `{1, 3}` }
         - The empty set is one of these 4 subsets in the powerset, and we already obtained
           this empty set for _n=0_.
 - _(n=2)_ t₃ = Σ(**s**) = Σ(1,2,3) = 6
@@ -334,4 +334,23 @@ python pprint_combine_all_summands.py 5 --sort --unique
 - _(n=3)_ _t₄_ = `1+2+4+8   ` = 15 ⇒ {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}
 - _(n=4)_ _t₅_ = `1+2+4+8+16` = 31 ⇒ {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31}
 
+It's visibly clear that the combinations of summands do indeed provide every consecutive integer
+in the sequence from 1 to _Mₙ_ = `2ⁿ - 1`).
 
+In fact, including the empty set the combinations provide every integer including zero
+(by convention we will ignore this).
+
+```sh
+python pprint_combine_all_summands.py 3 --sort --unique --emptyset
+```
+⇣
+
+- _( n )_ _tᵢ_ = `Σ    ` = _i?_ ⇒ {**s**}
+---
+- _(n=0)_ _t₁_ = `1    ` = 1 ⇒ {0, 1}
+- _(n=1)_ _t₂_ = `1+2  ` = 3 ⇒ {0, 1, 2, 3}
+- _(n=2)_ _t₃_ = `1+2+4` = 7 ⇒ {0, 1, 2, 3, 4, 5, 6, 7}
+
+It's now clear how to interpret the number of terms in {**s**} which grows on the order of
+the Mersenne number: it is the proper subset without the empty set, as the zero term is
+not by convention considered a summand (it is trivially a summand to every number).
