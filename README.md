@@ -440,6 +440,11 @@ python pprint_combine_all_summands_prime.py 7
 - _(n=5)_ _p₆_ = `2+3+7+11+17+41  ` = 81 ⇒ {2, 3, 7, 11, 17, 41, 5, 9, 13, 19, 43, 10, 14, 20, 44, 18, 24, 48, 28, 52, 58, 12, 16, 22, 46, 20, 26, 50, 30, 54, 60, 21, 27, 51, 31, 55, 61, 35, 59, 65, 69, 23, 29, 53, 33, 57, 63, 37, 61, 67, 71, 38, 62, 68, 72, 76, 40, 64, 70, 74, 78, 79, 81}
 - _(n=6)_ _p₇_ = `2+3+7+11+17+41+47` = 128 ⇒ {2, 3, 7, 11, 17, 41, 47, 5, 9, 13, 19, 43, 49, 10, 14, 20, 44, 50, 18, 24, 48, 54, 28, 52, 58, 58, 64, 88, 12, 16, 22, 46, 52, 20, 26, 50, 56, 30, 54, 60, 60, 66, 90, 21, 27, 51, 57, 31, 55, 61, 61, 67, 91, 35, 59, 65, 65, 71, 95, 69, 75, 99, 105, 23, 29, 53, 59, 33, 57, 63, 63, 69, 93, 37, 61, 67, 67, 73, 97, 71, 77, 101, 107, 38, 62, 68, 68, 74, 98, 72, 78, 102, 108, 76, 82, 106, 112, 116, 40, 64, 70, 70, 76, 100, 74, 80, 104, 110, 78, 84, 108, 114, 118, 79, 85, 109, 115, 119, 123, 81, 87, 111, 117, 121, 125, 126, 128}
 
+- OEIS: [A060341](https://oeis.org/A060341) “Non-adding primes: next term is smallest prime not the sum of any primes so far.”
+  (53 known values)
+
+> { 2, 3, 7, 11, 17, 41, 47, 83, 89, 307, 311, 613, 617, 919, 2801, 3109, 3413, 9283, 15461, 25087, 37781, 87613, 106181, 284509, 296591, 618269, 1196609, 1774921, 3564677, 5339287, 9818789, 14295223, 23196731, 46393469, 93691861, 98171363, 190948399, 429204473, 537182267, 934279823, 1457167181, 1471453121, 4781994647, 5701089169, 10483078289, 11402172811, 11416458751, 44704788169, 49486777289, 138896353627, 143295531103, 380783523611, 474069380507 }
+
 Now a close observer may wonder if we have to use primes for this at all, and the answer is no!
 
 A requirement of a base sequence is non-closure under addition, and another example of such a base sequence
@@ -481,3 +486,190 @@ three times their middle value.
   - In the minimal (or "best case") scenario of the first three odd numbers being the summands, the (minimal, "best")
     distance is two odd numbers away, meaning the first four odd numbers are all valid members of this "non-adding"
     sequence, after which we skip the next one (9).
+
+```sh
+python pprint_combine_all_summands_odd.py 7
+```
+⇣
+
+- _( n )_ _tᵢ_ = `Σ              ` = _i?_ ⇒ {**s**}
+---
+- _(n=0)_ _t₁_ = `1              ` = 1  ⇒ {1}
+- _(n=1)_ _t₂_ = `1+3            ` = 4  ⇒ {1, 3, 4}
+- _(n=2)_ _t₃_ = `1+3+5          ` = 9  ⇒ {1, 3, 5, 4, 6, 8, 9}
+- _(n=3)_ _t₄_ = `1+3+5+7        ` = 16 ⇒ {1, 3, 5, 7, 4, 6, 8, 8, 10, 12, 9, 11, 13, 15, 16}
+- _(n=4)_ _t₅_ = `1+3+5+7+17     ` = 33 ⇒ {1, 3, 5, 7, 17, 4, 6, 8, 18, 8, 10, 20, 12, 22, 24, 9, 11, 21, 13, 23, 25, 15, 25, 27, 29, 16, 26, 28, 30, 32, 33}
+- _(n=5)_ _t₆_ = `1+3+5+7+17+19  ` = 52 ⇒ {1, 3, 5, 7, 17, 19, 4, 6, 8, 18, 20, 8, 10, 20, 22, 12, 22, 24, 24, 26, 36, 9, 11, 21, 23, 13, 23, 25, 25, 27, 37, 15, 25, 27, 27, 29, 39, 29, 31, 41, 43, 16, 26, 28, 28, 30, 40, 30, 32, 42, 44, 32, 34, 44, 46, 48, 33, 35, 45, 47, 49, 51, 52}
+- _(n=6)_ _t₇_ = `1+3+5+7+17+19+53` = 105 ⇒ {1, 3, 5, 7, 17, 19, 53, 4, 6, 8, 18, 20, 54, 8, 10, 20, 22, 56, 12, 22, 24, 58, 24, 26, 60, 36, 70, 72, 9, 11, 21, 23, 57, 13, 23, 25, 59, 25, 27, 61, 37, 71, 73, 15, 25, 27, 61, 27, 29, 63, 39, 73, 75, 29, 31, 65, 41, 75, 77, 43, 77, 79, 89, 16, 26, 28, 62, 28, 30, 64, 40, 74, 76, 30, 32, 66, 42, 76, 78, 44, 78, 80, 90, 32, 34, 68, 44, 78, 80, 46, 80, 82, 92, 48, 82, 84, 94, 96, 33, 35, 69, 45, 79, 81, 47, 81, 83, 93, 49, 83, 85, 95, 97, 51, 85, 87, 97, 99, 101, 52, 86, 88, 98, 100, 102, 104, 105}
+
+- OEIS: [A062547](https://oeis.org/A062547) “a(n) is least odd integer not a partial sum of 1, 3, ..., a(n-1).”
+  (35 known values)
+
+> { 1, 3, 5, 7, 17, 19, 53, 55, 161, 163, 485, 487, 1457, 1459, 4373, 4375, 13121, 13123, 39365, 39367, 118097, 118099, 354293, 354295, 1062881, 1062883, 3188645, 3188647, 9565937, 9565939, 28697813, 28697815, 86093441, 86093443, 258280325 }
+
+How does the growth of these two sequences compare to the powers of two, and between one another?
+
+- We care about this as the slowest growing one will be the most efficient to store (forgetting for now the advantage
+  of the powers of two which is that they have a known closed form as 2ⁿ)
+
+```sh
+python sequence_comparison.py --length
+```
+⇣
+
+```STDOUT
+-----SEQUENCE LENGTHS------
+Non-adding primes: 53
+Non-adding odd integers: 35
+Powers of two: 34
+```
+
+(Hint: using `column -t` saves having to faff about with string length masking to get the columns aligned)
+
+```sh
+python sequence_comparison.py --growth
+```
+⇣
+```STDOUT
+-----SEQUENCE GROWTH-------
+Comparing the first 34 terms of all sequences
+i:             A060341        A062547   A000079
+0:             2              1         1
+1:             3              3         2
+2:             7              5         4
+3:             11             7         8
+4:             17             17        16
+5:             41             19        32
+6:             47             53        64
+7:             83             55        128
+8:             89             161       256
+9:             307            163       512
+10:            311            485       1024
+11:            613            487       2048
+12:            617            1457      4096
+13:            919            1459      8192
+14:            2801           4373      16384
+15:            3109           4375      32768
+16:            3413           13121     65536
+17:            9283           13123     131072
+18:            15461          39365     262144
+19:            25087          39367     524288
+20:            37781          118097    1048576
+21:            87613          118099    2097152
+22:            106181         354293    4194304
+23:            284509         354295    8388608
+24:            296591         1062881   16777216
+25:            618269         1062883   33554432
+26:            1196609        3188645   67108864
+27:            1774921        3188647   134217728
+28:            3564677        9565937   268435456
+29:            5339287        9565939   536870912
+30:            9818789        28697813  1073741824
+31:            14295223       28697815  2147483648
+32:            23196731       86093441  4294967296
+33:            46393469       86093443  8589934592
+```
+
+It's not visibly clear which sequence "wins out" here,
+so I'll only print the biggest on each line:
+
+```sh
+python sequence_comparison.py --growth --clarify-max
+```
+⇣
+```STDOUT
+-----SEQUENCE GROWTH-------
+Comparing the first 34 terms of all sequences
+i:	A060341	A062547	A000079
+0:	2	—	—
+1:	3	3	—
+2:	7	—	—
+3:	11	—	—
+4:	17	17	—
+5:	41	—	—
+6:	—	—	64
+7:	—	—	128
+8:	—	—	256
+9:	—	—	512
+10:	—	—	1024
+11:	—	—	2048
+12:	—	—	4096
+13:	—	—	8192
+14:	—	—	16384
+15:	—	—	32768
+16:	—	—	65536
+17:	—	—	131072
+18:	—	—	262144
+19:	—	—	524288
+20:	—	—	1048576
+21:	—	—	2097152
+22:	—	—	4194304
+23:	—	—	8388608
+24:	—	—	16777216
+25:	—	—	33554432
+26:	—	—	67108864
+27:	—	—	134217728
+28:	—	—	268435456
+29:	—	—	536870912
+30:	—	—	1073741824
+31:	—	—	2147483648
+32:	—	—	4294967296
+33:	—	—	8589934592
+```
+
+Which proves my hunch! The powers of two are consistently the worst option you can
+choose to represent your unique combinations, as the numbers it requires you to
+store grow extremely large: larger than those for either primes or odd numbers.
+
+The reason the powers of two grow so large is that the 'gaps' continue to saturate
+every possible consecutive integer by the combinations (due to closure under addition),
+(and recall that the combinations double each time), which forces the next summand
+to be the "worst case", the next power of two (as shown above).
+
+But what about the best case? Are the odd numbers or the primes better (i.e. smaller)?
+
+```sh
+python sequence_comparison.py --growth --clarify-min
+```
+⇣
+```STDOUT
+-----SEQUENCE GROWTH-------
+Comparing the first 34 terms of all sequences
+i:             A060341        A062547  A000079
+0:             —              1        1
+1:             —              —        2
+2:             —              —        4
+3:             —              7        —
+4:             —              —        16
+5:             —              19       —
+6:             47             —        —
+7:             —              55       —
+8:             89             —        —
+9:             —              163      —
+10:            311            —        —
+11:            —              487      —
+12:            617            —        —
+13:            919            —        —
+14:            2801           —        —
+15:            3109           —        —
+16:            3413           —        —
+17:            9283           —        —
+18:            15461          —        —
+19:            25087          —        —
+20:            37781          —        —
+21:            87613          —        —
+22:            106181         —        —
+23:            284509         —        —
+24:            296591         —        —
+25:            618269         —        —
+26:            1196609        —        —
+27:            1774921        —        —
+28:            3564677        —        —
+29:            5339287        —        —
+30:            9818789        —        —
+31:            14295223       —        —
+32:            23196731       —        —
+33:            46393469       —        —
+```
+
+The result is that the non-adding primes win!
