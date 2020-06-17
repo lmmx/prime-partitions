@@ -354,3 +354,89 @@ python pprint_combine_all_summands.py 3 --sort --unique --emptyset
 It's now clear how to interpret the number of terms in {**s**} which grows on the order of
 the Mersenne number: it is the proper subset without the empty set, as the zero term is
 not by convention considered a summand (it is trivially a summand to every number).
+
+However when the base sequence is not a consecutive sequence of numbers, but instead a
+set which is not closed under addition, such as the prime numbers, we see something different.
+
+Unlike the subsequence of the set of natural numbers indexed by the consecutive ordinal
+sequence `{1, ..., i}`, a subsequence of the set of prime numbers indexed by the consecutive
+ordinal sequence `{1, ..., i}` will **not** have a sequence of cardinal values equal to the
+ordinal sequence of primes.
+
+We know this intuitively by induction because 1 is not prime, so since the ordinal sequence
+`{1, ... }` must begin with a number that is not prime, then the sequence of values cannot
+be the cardinals `{1, ... }`.
+
+Now that the problem has been stated, it is possible to review the earlier example of
+powers of two and see the role of Mersenne primes 
+
+Previously I described their role as being:
+
+> the maximum value reachable by addition of terms in the sequence of powers base 2
+> with exponents _n_
+
+...but in reality it's more practically relevant to notice that their role is that of
+the **worst case** for the purpose of picking a 'new' summand.
+
+They are the "worst case", and because the base sequence is consecutive and produces
+the "worst possible scenario" in which every single combination prevents (or
+duplicates) a potential integer being permissible as the next summand.
+
+That is, if there was a 'gap' in the natural numbers' consecutiveness by some strange fluke
+(i.e. if the cardinal value _c_ indexed by an ordinal _o_ in the 'fluke natural' sequence was
+`o+1`, rather than `o`, we would be able to sneakily obtain _o_ as a 'new' summand (i.e. at the
+'gap' which was not rendered unpermissible at the _o_'th position) and _o_ would be
+less than the Mersenne number which had been guaranteed to represent the "worst case" (i.e.
+the number after the Mersenne number, i.e. the power of 2 of the same order _n_, was guaranteed
+to be the minimal possible value for the next summand).
+
+In this way, we can see the primes as being helpful: they are full of 'gaps'.
+
+We talk of "consecutive primes" to mean adjacent in the sequence of prime numbers, but
+there is only a single pair of elements in the primes which are consecutive integers in
+the usual sense of differing by 1: the first two primes, `{2,3}`. Two is the only even
+prime number, so there cannot be any other [usual sense] consecutive pair.
+
+As such, the prime numbers are full of gaps.
+
+Copying the above script used to verify that the sequence of powers of two meet the
+requirements (albeit in the provably "worst case" way), and replacing the indexed
+set of powers of two with the set of the first few prime numbers, we will now return
+to referring to the totals as the letter _p_ rather than _t_ to emphasise their primality.
+
+```sh
+python pprint_combine_all_summands_prime_naive.py 3 --sort --unique
+```
+⇣
+
+- _( n )_ _tᵢ_ = `Σ    ` = _i?_ ⇒ {**s**}
+---
+- _(n=0)_ _p₁_ = `2    ` = 2  ⇒ {2}
+- _(n=1)_ _p₂_ = `2+3  ` = 5  ⇒ {2, 3, 5}
+- _(n=2)_ _p₃_ = `2+3+5` = 10 ⇒ {2, 3, 5, 7, 8, 10}
+
+...and again we have a problem: just as earlier we had to skip 3 as it was formable from
+the first two summands (`1+2`), here we have to skip `5` as it is formable from `2+3`.
+
+This time I will code it into the algorithm rather than changing the index sequence manually,
+and I expect to recover the modified base sequence of 'skipped primes': `{2, 3, 7, 11, 17, ...}`
+
+Calculating this base sequence of 'skipped primes' determines it to begin: `{2, 3, 7, 11, 17, 41, 47, ...}`
+
+The program I wrote will only calculate up to the 8th term, and will need to be modified for larger values.
+
+```sh
+python pprint_combine_all_summands_prime.py 7
+```
+⇣
+
+- _( n )_ _tᵢ_ = `Σ               ` = _i?_ ⇒ {**s**}
+---
+- _(n=0)_ _p₁_ = `2               ` = 2  ⇒ {2}
+- _(n=1)_ _p₂_ = `2+3             ` = 5  ⇒ {2, 3, 5}
+- _(n=2)_ _p₃_ = `2+3+7           ` = 12 ⇒ {2, 3, 7, 5, 9, 10, 12}
+- _(n=3)_ _p₄_ = `2+3+7+11        ` = 23 ⇒ {2, 3, 7, 11, 5, 9, 13, 10, 14, 18, 12, 16, 20, 21, 23}
+- _(n=4)_ _p₅_ = `2+3+7+11+17     ` = 40 ⇒ {2, 3, 7, 11, 17, 5, 9, 13, 19, 10, 14, 20, 18, 24, 28, 12, 16, 22, 20, 26, 30, 21, 27, 31, 35, 23, 29, 33, 37, 38, 40}
+- _(n=5)_ _p₆_ = `2+3+7+11+17+41  ` = 81 ⇒ {2, 3, 7, 11, 17, 41, 5, 9, 13, 19, 43, 10, 14, 20, 44, 18, 24, 48, 28, 52, 58, 12, 16, 22, 46, 20, 26, 50, 30, 54, 60, 21, 27, 51, 31, 55, 61, 35, 59, 65, 69, 23, 29, 53, 33, 57, 63, 37, 61, 67, 71, 38, 62, 68, 72, 76, 40, 64, 70, 74, 78, 79, 81}
+- _(n=6)_ _p₇_ = `2+3+7+11+17+41+47` = 128 ⇒ {2, 3, 7, 11, 17, 41, 47, 5, 9, 13, 19, 43, 49, 10, 14, 20, 44, 50, 18, 24, 48, 54, 28, 52, 58, 58, 64, 88, 12, 16, 22, 46, 52, 20, 26, 50, 56, 30, 54, 60, 60, 66, 90, 21, 27, 51, 57, 31, 55, 61, 61, 67, 91, 35, 59, 65, 65, 71, 95, 69, 75, 99, 105, 23, 29, 53, 59, 33, 57, 63, 63, 69, 93, 37, 61, 67, 67, 73, 97, 71, 77, 101, 107, 38, 62, 68, 68, 74, 98, 72, 78, 102, 108, 76, 82, 106, 112, 116, 40, 64, 70, 70, 76, 100, 74, 80, 104, 110, 78, 84, 108, 114, 118, 79, 85, 109, 115, 119, 123, 81, 87, 111, 117, 121, 125, 126, 128}
+
