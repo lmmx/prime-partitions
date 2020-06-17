@@ -440,3 +440,44 @@ python pprint_combine_all_summands_prime.py 7
 - _(n=5)_ _p₆_ = `2+3+7+11+17+41  ` = 81 ⇒ {2, 3, 7, 11, 17, 41, 5, 9, 13, 19, 43, 10, 14, 20, 44, 18, 24, 48, 28, 52, 58, 12, 16, 22, 46, 20, 26, 50, 30, 54, 60, 21, 27, 51, 31, 55, 61, 35, 59, 65, 69, 23, 29, 53, 33, 57, 63, 37, 61, 67, 71, 38, 62, 68, 72, 76, 40, 64, 70, 74, 78, 79, 81}
 - _(n=6)_ _p₇_ = `2+3+7+11+17+41+47` = 128 ⇒ {2, 3, 7, 11, 17, 41, 47, 5, 9, 13, 19, 43, 49, 10, 14, 20, 44, 50, 18, 24, 48, 54, 28, 52, 58, 58, 64, 88, 12, 16, 22, 46, 52, 20, 26, 50, 56, 30, 54, 60, 60, 66, 90, 21, 27, 51, 57, 31, 55, 61, 61, 67, 91, 35, 59, 65, 65, 71, 95, 69, 75, 99, 105, 23, 29, 53, 59, 33, 57, 63, 63, 69, 93, 37, 61, 67, 67, 73, 97, 71, 77, 101, 107, 38, 62, 68, 68, 74, 98, 72, 78, 102, 108, 76, 82, 106, 112, 116, 40, 64, 70, 70, 76, 100, 74, 80, 104, 110, 78, 84, 108, 114, 118, 79, 85, 109, 115, 119, 123, 81, 87, 111, 117, 121, 125, 126, 128}
 
+Now a close observer may wonder if we have to use primes for this at all, and the answer is no!
+
+A requirement of a base sequence is non-closure under addition, and another example of such a base sequence
+is the odd numbers: `{1,3,5,7,...}`. In fact, these first four terms `{1,3,5,7}` satisfy the "non-adding"
+condition.
+
+- A sum must have multiple summands to give a sum greater than its component summands: |**s**| > 0
+- A sum must have an odd number of summands: |**s**| mod 2 > 0 ∴ |**s**| mod 2 ≡ 1
+
+So given these conditions, the first potential term which could give rise to a disallowed sum would be the 4th term,
+as the sum of the first three terms (i.e. `{1,3,5}`). However the sum of three consecutive odd numbers is equal to
+three times their middle value.
+
+- The quotient of `3/2` is 1, and the quotient of `(3×3)/2` is 4
+- If we had began the sequence at 3, these three terms would be `{3,5,7}` and their sum would be threefold the middle
+  term of 5 (`3×5`=15)
+  - The quotient of `5/2` is 2, and the quotient of `(5×3)/2` is 7.
+  - The difference in quotients is 5 (which was the multiplicand of 3, i.e. the middle term)
+- If we had began the sequence at 5, these three terms would be `{5,7,9}` and their sum would be... (`3×7`=21)
+  - The quotient of `7/2` is 3, and the quotient of `(7×3)/2` is 10.
+  - The difference in quotients is 7 (which was the multiplicand of 3, i.e. the middle term)
+- In general, the sum of three consecutive odd numbers is threefold their middle value (their mean),
+  and the difference in quotients (divisor 2) is the middle term
+- This means that the difference in quotients (divisor 2) is the final term minus 2 (as the difference between
+  adjacent consecutive odd numbers is 2).
+- Since the difference in quotients (divisor 2) is the final term minus 2, and this difference is in respect to
+  (i.e. "away from") the middle term, and the middle term can itself be expressed as "the final term minus 2",
+  then what we are really saying is that the next term is double the final term minus 4.
+  - Since the final term of three terms is (at minimum) the 3rd odd number, at a distance of 2 (in respect to the
+    base sequence of the odd numbers) from the first term, which would be the 1st odd number, doubling this distance
+    (N.B. not doubling the number itself, but its distance from the 1st term, at minimum the 1st odd number) will give
+    us the odd number at a (minimum) distance of 4 (at minimum the 5th term) then "minus two" twice, i.e. minus two
+    integers twice, i.e. minus four, i.e. minus 2 positions in the odd number base sequence. This means that the
+    minimum possible distance when forming a sum from the minimum possible number of summands of odd numbers (three)
+    is the 5th odd number minus two odd numbers which is the 3rd odd number from the middle consecutive odd number.
+  - Three odd numbers away from the middle odd number in the trio is equivalent to two odd numbers away from the final
+    odd number in the trio, in other words it is not possible for the sum of three odd numbers to be the next odd number
+    in the sequence!
+  - In the minimal (or "best case") scenario of the first three odd numbers being the summands, the (minimal, "best")
+    distance is two odd numbers away, meaning the first four odd numbers are all valid members of this "non-adding"
+    sequence, after which we skip the next one (9).
