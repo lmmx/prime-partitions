@@ -966,3 +966,103 @@ So at the highest _n_ in these results (_n_ = 22) the non-adding odd prime is
 61.6 thousand which is 44.6 thousand smaller than the equivalent non-adding prime
 (the earlier output gave this difference as a proportion of "1.7⨉", which is
 the ratio of the larger value to the minimum value i.e. of 100 thousand to 61.6 thousand).
+
+---
+
+This suggests there exists a sequence (**S**) of sequences (**s**):
+
+- **S** = { **S₀**, **S₁**, ... }
+  - **S₀** = **s** = { **s₀**, **s₁**, ... } = `A060341` ("non-adding primes")
+  - **S₁** = **s** = { **s₀**, **s₁**, ... } = `NAOPRIM` ("non-adding odd primes")
+
+...on which a monotonically decreasing function `A(o)` can be defined.
+
+The value of `A(o)` is the difference(s) in the element(s) of the sequence
+**Sₒ** at some **n** (i.e. a vector of one or more values, _n_) relative to
+the value of the 'preceding' sequence **Sₒ₋₁**.
+
+- E.g. we may choose **n** = { 12 } because _n_ = 12 was the first index for which
+  the non-adding primes were consistently smaller than the powers of two
+  - ...and in turn, the non-adding odd primes were smaller than the non-adding primes
+    for _n_ = 12
+- Alternatively, we may choose **n** = { 12, 13, 14, ... } as (as far as can be
+  shown so far) all values of _n_ ≥ 12 are consistently smaller than the powers of two
+  - ...and in turn, the non-adding odd primes were consistently smaller than all
+    non-adding primes for _n_ ≥ 12
+
+`A(o)` only takes values _o_ ∈ ℕ (∵ you cannot compare the preceding
+nonnegative integer of an integer less than 1).
+
+> For a given **n** = { _n_, ...}, initially suggested to be the incrementing
+> sequence **n** = `{ 12, 13, 14, ... }`, we define a function `A(o)` whose value
+> equals the difference between **Sₒ** and **Sₒ₋₁**.
+> Let **S** be the ordered set of "non-adding" sequences whose domain is restricted
+> to the set of prime numbers **ℙ** and whose initial value is given by the offset
+> _o_ in **ℙ** (we write **ℙ**[0] = 2, **ℙ**[1] = 3, **ℙ**[2] = 5)
+
+...for which we have determined that there exists at least two values
+
+- i.e. when increasing the offset of the base sequence of the primes from 0 to 1,
+  there was a decrease, so there exists a monotonically decreasing function in general,
+  - but it's unknown for how many further increasing offsets this will continue to
+    monotonically decrease
+  - i.e. by continuing to "monotonically decrease" in this way we will continue to get
+    'efficiency gains' in terms of consistently decreasing size of the values of the sequence
+    i.e. for which the non-adding primes in the sequence will continue to get smaller for
+    given values of _n_ beyond 12
+
+---
+
+- The first sequence (**s** = **S₀**) in this sequence of sequences (**S**) is the non-adding primes
+  - The non-adding primes are straightforwardly formed from the "base sequence" of the prime numbers, ℙ
+- The second sequence in this sequence of sequences is the non-adding odd primes
+  - The non-adding odd primes can be seen as being formed from either:
+    - "The prime numbers which are also odd numbers"
+    - "The prime numbers offset 1"
+    - "The prime numbers except those divisible by 2"
+
+So actually we could say there are multiple possible sequences of sequences (multiple possible
+**S**, where **S** = `{s₀, s₁, ...}`):
+
+- "The prime numbers which are also other sets"
+  - It's not clear what the order of this sequence of sequences would be
+  - Are the odd numbers the first element of some ordered set of sequences?
+- "The prime numbers offset _o_ for _o_ ∈ **ℕ**"
+  - **s₀** is the non-adding sequence from **ℙ**[_o₀_] (non-adding from the _o₀_'th ℙ,
+    i.e. the {0'th natural number}'th prime i.e. the 1st prime)
+    - i.e. **s₀** is the sequence of non-adding primes
+  - **s₁** is the non-adding sequence from **ℙ**[_o₁_] (non-adding from the _o₁_'th ℙ,
+    i.e. the {1'st natural number}'th prime i.e. the 2nd prime)
+    - i.e. **s₁** is the sequence of non-adding odd primes
+  - **s₂** is the non-adding sequence from **ℙ**[_o₂_] (non-adding from the _o₂_'th ℙ,
+    i.e. the {2'nd natural number}'th prime i.e. the 3rd prime)
+    - i.e. **s₂** is the sequence of non-adding primes indivisible by 2 or 3
+    - (but this is the same as saying '**ℙ** excluding 2 or 3' or '**ℙ** offset 2'
+
+So we have a sequence of non-adding prime sequences whose base sequence is at increasing offsets
+(_o_) of the primes **ℙ**, or equivalently a sequence of non-adding prime sequences whose start value
+is the _o_'th value in the primes **ℙ**.
+
+This sequence _is finite_ (by my reasoning), because we define it in terms of a monotonically
+decreasing function `A(o)` (provisionally defined for _n_ ≥ 12) which will impose a limit at
+the last value of _o_ for which `A(o)` gives a start value which is greater than the prime
+at that value.
+
+Back of the envelope calculation of what this limit is:
+
+- Intuitively, it must be less than (the index of 617 in **ℙ**) - 12 = 113 - 12 = 101
+- At a glance, this sequence is at most 100 numbers
+  - This is the 'worst case', it's likely before then - and this should be fairly simple to calculate
+
+The final sequence (let's assume it's the 100th for simplicity) will give the smallest
+possible values (though note there's also the possibility that being monotonically decreasing
+may just mean that we skip some values of _o_ rather than it being a series of consecutive integers)
+of non-adding primes, and this will mean it is the most efficient to use for the original
+purpose of uniquely identifying combinations of _n_ items.
+
+Whichever this 'best' sequence is, it will require that alone to be calculated for higher values
+of _n_ (so there is no point optimising the machinery for this until that sequence's _o_ is determined).
+
+---
+
+TBC !
