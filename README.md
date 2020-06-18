@@ -673,3 +673,296 @@ i:             A060341        A062547  A000079
 ```
 
 The result is that the non-adding primes win!
+
+---
+
+While considering this result, I had an unusual thought: what if you were to 'combine the best of both worlds'
+(i.e. noting how the odd numbers do get some "good performance" up to 12, in that they are the minimum about
+half of the time), by using the odd primes only, rather than the normal primes?
+
+My guess is that there would be a benefit in that consecutive odd numbers which are also consecutive primes would
+potentially be permissible, whereas they're not when you have 2 in your prime base sequence.
+
+My second guess is that this benefit might become 'exhausted' as the combinations of `p+2` primes end up substituting
+the role of the even prime 2.
+
+To investigate this, I'll need to modify my algorithm to proceed beyond 8 terms, and perhaps also add a further
+assumption so that it discards combinations of summands that could never sum to the target next prime.
+
+```sh
+python pprint_combine_all_summands_odd_prime.py 24 -t
+```
+⇣
+```sh
+cat pprint_combine_all_summands_odd_prime.py.24.out
+```
+⇣
+
+- _( n )_ _tᵢ_ = `Σ                                                                   ` = _i?_
+---
+- _(n=0)_ _p₁_ = `3                                                                   ` = 3   
+- _(n=1)_ _p₂_ = `3+5                                                                 ` = 8   
+- _(n=2)_ _p₃_ = `3+5+7                                                               ` = 15  
+- _(n=3)_ _p₄_ = `3+5+7+11                                                            ` = 26  
+- _(n=4)_ _p₅_ = `3+5+7+11+13                                                         ` = 39  
+- _(n=5)_ _p₆_ = `3+5+7+11+13+17                                                      ` = 56  
+- _(n=6)_ _p₇_ = `3+5+7+11+13+17+47                                                   ` = 103 
+- _(n=7)_ _p₈_ = `3+5+7+11+13+17+47+97                                                ` = 200 
+- _(n=8)_ _p₉_ = `3+5+7+11+13+17+47+97+101                                            ` = 301 
+- _(n=9)_ _p₁₀_ = `3+5+7+11+13+17+47+97+101+307                                        ` = 608 
+- _(n=10)_ _p₁₁_ = `3+5+7+11+13+17+47+97+101+307+311                                    ` = 919 
+- _(n=11)_ _p₁₂_ = `3+5+7+11+13+17+47+97+101+307+311+313                                ` = 1232
+- _(n=12)_ _p₁₃_ = `3+5+7+11+13+17+47+97+101+307+311+313+613                            ` = 1845
+- _(n=13)_ _p₁₄_ = `3+5+7+11+13+17+47+97+101+307+311+313+613+617                        ` = 2462
+- _(n=14)_ _p₁₅_ = `3+5+7+11+13+17+47+97+101+307+311+313+613+617+619                    ` = 3081
+- _(n=15)_ _p₁₆_ = `3+5+7+11+13+17+47+97+101+307+311+313+613+617+619+2777               ` = 5858
+- _(n=16)_ _p₁₇_ = `3+5+7+11+13+17+47+97+101+307+311+313+613+617+619+2777+3079          ` = 8937
+- _(n=17)_ _p₁₈_ = `3+5+7+11+13+17+47+97+101+307+311+313+613+617+619+2777+3079+3083     ` = 12020
+- _(n=18)_ _p₁₉_ = `3+5+7+11+13+17+47+97+101+307+311+313+613+617+619+2777+3079+3083+9239` = 21259
+- _(n=19)_ _p₂₀_ = `3+5+7+11+13+17+47+97+101+307+311+313+613+617+619+2777+3079+3083+9239+9241` = 30500
+- _(n=20)_ _p₂₁_ = `3+5+7+11+13+17+47+97+101+307+311+313+613+617+619+2777+3079+3083+9239+9241+21557` = 52057
+- _(n=21)_ _p₂₂_ = `3+5+7+11+13+17+47+97+101+307+311+313+613+617+619+2777+3079+3083+9239+9241+21557+43117` = 95174
+- _(n=22)_ _p₂₃_ = `3+5+7+11+13+17+47+97+101+307+311+313+613+617+619+2777+3079+3083+9239+9241+21557+43117+61603` = 156777
+
+By adding some code to append to file (since I wanted to record the time between iterations by simply detecting file writes with `entr`),
+I managed to record up to the 23rd iteration, `n=22` of a target of 24 iterations, i.e. up to and including `n=23`.
+
+However, at some point after the 23rd iteration I got a system crash that froze my desktop environment (_Cinnamon_) and **wiped my bootloader**
+(`grub`). I'm unclear how exactly this took place or how to prevent it in future... Investigation ongoing!
+
+The command to track the changes with entr was:
+
+```sh
+echo > pprint_combine_all_summands_odd_prime.py.24.out
+ls pprint_combine_all_summands_odd_prime.py.24.out | entr -p -s "date -Iseconds | cut -d\+ -f1 | tr '\n' ' ' | tr 'T' '_'; tail -1 pprint_combine_all_summands_odd_prime.py.24.out" | sed '/bash returned exit code 0/d'
+```
+
+To break this down into its component parts (I'm not a fan of backslashes in one liners!):
+
+- `echo > pprint_combine_all_summands_odd_prime.py.24.out;`
+  - Clears the contents of the output file (in case it was overwriting) or else creates an empty file
+  - The output file name is the input script filename + the number of iterations + the extension `.out`
+- `ls pprint_combine_all_summands_odd_prime.py.24.out | `
+  - simply prints the name of the file to STDOUT
+- `entr -p -s "`
+  - `entr` is the program which will 'watch' for file changes to the `.out` file passed in from `ls`
+  - `-p` flag says "postpone" i.e. don't do anything upon invocation of `entr`
+  - `-s` says evaluate the first argument in the shell (and print a message of the exit code returned)
+- `date -Iseconds | cut -d\+ -f1 | tr '\n' ' ' | tr 'T' '_';`
+  - `date` prints the date and time in ISO format from year all the way down to the current second
+  - `cut` splits the output of `date` on the '+' delimiter and `-f1` retrieves the first element in the split (the date and time part)
+  - `tr '\n' ' ' | tr 'T' '_';`
+    - replaces the newline with a space (so that the output of the `tail` command that follows is separated from the `date` output after a space)
+    - replaces the 'T' delimiter in the ISO formatted date and time string (indicating the start of the time portion) with an underscore
+    - ...and the semicolon ends the pipe from `date` but after this there's another command whose output will be conjoined to its output
+- `tail -1 pprint_combine_all_summands_odd_prime.py.24.out"`
+  - prints the last line of the file, i.e. the one whose write (presuming a single line write at a time) triggered `entr`
+  - the `"` closes the single argument being passed to the `-s` flag of `entr` for shell (bash) invocation
+- `| sed '/bash returned exit code 0/d'` prevents the exit code message from `entr` being printed along with the `date` and `tail` output
+
+Bootloader wipes aside, the result is a list of 23 elements of this sequence, which can now be compared to the non-adding primes
+to see if there may be use in pursuing further terms of this sequence:
+
+```
+{ 3, 5, 7, 11, 13, 17, 47, 97, 101, 307, 311, 313, 613, 617, 619, 2777, 3079, 3083, 9239, 9241, 21557, 43117, 61603 }
+```
+
+After adding this to `nonadding_sequences.py` I can now rerun it:
+
+```sh
+python sequence_comparison.py
+```
+⇣
+
+```STDOUT
+-----SEQUENCE LENGTHS------
+Non-adding primes: 53
+Non-adding odd integers: 35
+Powers of two: 34
+Non-adding odd primes: 23
+
+-----SEQUENCE GROWTH-------
+Comparing the first 23 terms of all sequences
+i:	A060341	A062547	A000079	NAOPRIM
+0:	2	1	1	3
+1:	3	3	2	5
+2:	7	5	4	7
+3:	11	7	8	11
+4:	17	17	16	13
+5:	41	19	32	17
+6:	47	53	64	47
+7:	83	55	128	97
+8:	89	161	256	101
+9:	307	163	512	307
+10:	311	485	1024	311
+11:	613	487	2048	313
+12:	617	1457	4096	613
+13:	919	1459	8192	617
+14:	2801	4373	16384	619
+15:	3109	4375	32768	2777
+16:	3413	13121	65536	3079
+17:	9283	13123	131072	3083
+18:	15461	39365	262144	9239
+19:	25087	39367	524288	9241
+20:	37781	118097	1048576	21557
+21:	87613	118099	2097152	43117
+22:	106181	354293	4194304	61603
+```
+
+...and again clarify the minimum at each _n_:
+
+```sh
+python sequence_comparison.py --growth --clarify-min
+```
+⇣
+
+```STDOUT
+-----SEQUENCE GROWTH-------
+Comparing the first 23 terms of all sequences
+i:	A060341	A062547	A000079	NAOPRIM
+0:	—	1	1	—
+1:	—	—	2	—
+2:	—	—	4	—
+3:	—	7	—	—
+4:	—	—	—	13
+5:	—	—	—	17
+6:	47	—	—	47
+7:	—	55	—	—
+8:	89	—	—	—
+9:	—	163	—	—
+10:	311	—	—	311
+11:	—	—	—	313
+12:	—	—	—	613
+13:	—	—	—	617
+14:	—	—	—	619
+15:	—	—	—	2777
+16:	—	—	—	3079
+17:	—	—	—	3083
+18:	—	—	—	9239
+19:	—	—	—	9241
+20:	—	—	—	21557
+21:	—	—	—	43117
+22:	—	—	—	61603
+```
+
+So my hunch about this 'trick' making the prime numbers consistently smaller
+by omitting 2 worked as well!
+
+For comparison, I added another flag `-p` or `--proportions`:
+
+> "Express nonmax./nonmin. values as % of max./min"
+
+```sh
+python sequence_comparison.py --growth --clarify-min -p
+```
+⇣
+
+```STDOUT
+-----SEQUENCE GROWTH-------
+Comparing the first 23 terms of all sequences
+i:	A060341	A062547	A000079	NAOPRIM
+0:	2.0⨉	1	1	3.0⨉
+1:	1.5⨉	1.5⨉	2	2.5⨉
+2:	1.8⨉	1.2⨉	4	1.8⨉
+3:	1.6⨉	7	1.1⨉	1.6⨉
+4:	1.3⨉	1.3⨉	1.2⨉	13
+5:	2.4⨉	1.1⨉	1.9⨉	17
+6:	47	1.1⨉	1.4⨉	47
+7:	1.5⨉	55	2.3⨉	1.8⨉
+8:	89	1.8⨉	2.9⨉	1.1⨉
+9:	1.9⨉	163	3.1⨉	1.9⨉
+10:	311	1.6⨉	3.3⨉	311
+11:	2.0⨉	1.6⨉	6.5⨉	313
+12:	1.0⨉	2.4⨉	6.7⨉	613
+13:	1.5⨉	2.4⨉	13.3⨉	617
+14:	4.5⨉	7.1⨉	26.5⨉	619
+15:	1.1⨉	1.6⨉	11.8⨉	2777
+16:	1.1⨉	4.3⨉	21.3⨉	3079
+17:	3.0⨉	4.3⨉	42.5⨉	3083
+18:	1.7⨉	4.3⨉	28.4⨉	9239
+19:	2.7⨉	4.3⨉	56.7⨉	9241
+20:	1.8⨉	5.5⨉	48.6⨉	21557
+21:	2.0⨉	2.7⨉	48.6⨉	43117
+22:	1.7⨉	5.8⨉	68.1⨉	61603
+```
+
+...which shows (to 1 decimal place) the relative sizes of the non-minimum values relative to the minimum,
+and clarifies that the 'lead' of the non-adding odd primes (_NAOPRIM_) over the non-adding primes
+(beginning `{2,3,7,...}, _A060341_) is significant: the relative size of elements in _A060341_ varies from
+around 1⨉-3⨉ (i.e. 100%-300% the value of the element for the same _n_ in _NAOPRIM_).
+
+It also gives percentages for the non-maximum values relative to the maximum:
+
+```sh
+python sequence_comparison.py --growth --clarify-max -p
+```
+⇣
+
+```STDOUT
+-----SEQUENCE GROWTH-------
+Comparing the first 23 terms of all sequences
+i:	A060341	A062547	A000079	NAOPRIM
+0:	66.7%	33.3%	33.3%	3
+1:	60.0%	60.0%	40.0%	5
+2:	7	71.4%	57.1%	7
+3:	11	63.6%	72.7%	11
+4:	17	17	94.1%	76.5%
+5:	41	46.3%	78.0%	41.5%
+6:	73.4%	82.8%	64	73.4%
+7:	64.8%	43.0%	128	75.8%
+8:	34.8%	62.9%	256	39.5%
+9:	60.0%	31.8%	512	60.0%
+10:	30.4%	47.4%	1024	30.4%
+11:	29.9%	23.8%	2048	15.3%
+12:	15.1%	35.6%	4096	15.0%
+13:	11.2%	17.8%	8192	7.5%
+14:	17.1%	26.7%	16384	3.7%
+15:	9.4%	13.4%	32768	8.4%
+16:	5.2%	20.0%	65536	4.7%
+17:	7.0%	10.0%	131072	2.3%
+18:	5.9%	15.0%	262144	3.5%
+19:	4.7%	7.5%	524288	1.7%
+20:	3.6%	11.3%	1048576	2.0%
+21:	4.1%	5.6%	2097152	2.0%
+22:	2.5%	8.4%	4194304	1.4%
+```
+
+...or I can simply give the difference in absolute values:
+
+```sh
+python sequence_comparison.py --growth --clarify-min -d
+```
+⇣
+```STDOUT
+-----SEQUENCE GROWTH-------
+Comparing the first 23 terms of all sequences
+i:   A060341  A062547  A000079   NAOPRIM
+0:   +1       1        1         +2
+1:   +1       +1       2         +3
+2:   +3       +1       4         +3
+3:   +4       7        +1        +4
+4:   +4       +4       +3        13
+5:   +24      +2       +15       17
+6:   47       +6       +17       47
+7:   +28      55       +73       +42
+8:   89       +72      +167      +12
+9:   +144     163      +349      +144
+10:  311      +174     +713      311
+11:  +300     +174     +1735     313
+12:  +4       +844     +3483     613
+13:  +302     +842     +7575     617
+14:  +2182    +3754    +15765    619
+15:  +332     +1598    +29991    2777
+16:  +334     +10042   +62457    3079
+17:  +6200    +10040   +127989   3083
+18:  +6222    +30126   +252905   9239
+19:  +15846   +30126   +515047   9241
+20:  +16224   +96540   +1027019  21557
+21:  +44496   +74982   +2054035  43117
+22:  +44578   +292690  +4132701  61603
+```
+
+So at the highest _n_ in these results (_n_ = 22) the non-adding odd prime is
+61.6 thousand which is 44.6 thousand smaller than the equivalent non-adding prime
+(the earlier output gave this difference as a proportion of "1.7⨉", which is
+the ratio of the larger value to the minimum value i.e. of 100 thousand to 61.6 thousand).

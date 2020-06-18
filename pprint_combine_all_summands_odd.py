@@ -1,15 +1,15 @@
 from itertools import chain, combinations
+from generate_subscripts import n_to_subscript
 import sys
 import argparse
 
 indexed_seq = [1,3,5,7,9,11,13,15]
-subscripts = "₁₂₃₄₅₆₇₈"
 
 def nextodd(n):
     return n+2
 
 if len(sys.argv) == 1:
-    max_n = len(subscripts) # 8
+    max_n = len(indexed_seq) # 8
 else:
     parser = argparse.ArgumentParser(description="Get summand combinations")
     parser.add_argument("max_n", type=int, help="Max. number of summands to combine")
@@ -77,5 +77,5 @@ for n in range(max_n):
         all_vals = [seen.setdefault(x, x) for x in all_vals if x not in seen]
     seen_sum_combs.append(t)
     csv = "{" + ", ".join(map(repr, all_vals)) + "}"
-    print(f"- _(n={n})_ _t{subscripts[n]}_ = `{sum_str}{mask_str}` = {t}{t_mask} ⇒ {csv}")
+    print(f"- _(n={n})_ _t{n_to_subscript(n+1)}_ = `{sum_str}{mask_str}` = {t}{t_mask} ⇒ {csv}")
     #print(f" {max_pair} ⇒ {new_val_info}")

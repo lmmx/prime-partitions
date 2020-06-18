@@ -1,9 +1,9 @@
 from itertools import product as cartcombs
+from generate_subscripts import n_to_subscript
 
 nonprimes = [1,2,3,4,5,6,7,8]
-subscripts = "₁₂₃₄₅₆₇₈"
 
-max_i = len(subscripts) # 8
+max_i = len(nonprimes) # 8
 max_width = sum([len(str(p)) for p in nonprimes]) + len(nonprimes) - 1
 max_t_digits = len(str(sum(nonprimes[:max_i + 1])))
 
@@ -19,4 +19,4 @@ for i in range(max_i):
     new_totals = [sum(s) for s in new_combs]
     seen_sum_combs.append(t)
     csv = ", ".join(map(repr, new_totals))
-    print(f"- _p{subscripts[i]}_ = `{sum_str}{mask_str}` = `{t}{t_mask}` ⇒ {csv}")
+    print(f"- _p{n_to_subscript(i+1)}_ = `{sum_str}{mask_str}` = `{t}{t_mask}` ⇒ {csv}")

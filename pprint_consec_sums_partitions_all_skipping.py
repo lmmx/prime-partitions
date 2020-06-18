@@ -1,11 +1,11 @@
 from itertools import chain, combinations
+from generate_subscripts import n_to_subscript
 import sys
 
 indexed_seq = [1,2,4,5,6,7,8,9]
-subscripts = "₁₂₃₄₅₆₇₈"
 
 if len(sys.argv) == 1:
-    max_i = len(subscripts) # 8
+    max_i = len(indexed_seq) # 8
 else:
     max_i = int(sys.argv[1])
 
@@ -42,5 +42,5 @@ for i in range(max_i):
     seen_sum_combs.append(t)
     # csv = ", ".join(map(repr, new_totals))
     csv = "{" + ", ".join(map(repr, all_vals)) + "}"
-    print(f"- _(n={i})_ _t{subscripts[i]}_ = `{sum_str}{mask_str}` = {t}{t_mask} ⇒ {csv}")
+    print(f"- _(n={i})_ _t{n_to_subscript(i+1)}_ = `{sum_str}{mask_str}` = {t}{t_mask} ⇒ {csv}")
     #print(f" {max_pair} ⇒ {new_val_info}")
