@@ -1026,7 +1026,12 @@ So actually we could say there are multiple possible sequences of sequences (mul
 
 - "The prime numbers which are also other sets"
   - It's not clear what the order of this sequence of sequences would be
-  - Are the odd numbers the first element of some ordered set of sequences?
+  - The odd numbers are the first element of **ℕ** divisible by increasing subsets **d** of **ℕ**
+    (except 1).
+    - For the odd numbers the divisor subset is { 2 }
+    - It seems obvious that the primes already 'encode' this so may as well use the alternative phrasing below
+  - Unclear what other subsets of **ℕ** might give better results (cannot be naturals,
+    must be ordered) or why
 - "The prime numbers offset _o_ for _o_ ∈ **ℕ**"
   - **s₀** is the non-adding sequence from **ℙ**[_o₀_] (non-adding from the _o₀_'th ℙ,
     i.e. the {0'th natural number}'th prime i.e. the 1st prime)
@@ -1048,10 +1053,15 @@ decreasing function `A(o)` (provisionally defined for _n_ ≥ 12) which will imp
 the last value of _o_ for which `A(o)` gives a start value which is greater than the prime
 at that value.
 
-Back of the envelope calculation of what this limit is:
+Back of the envelope estimate of this limit:
 
-- Intuitively, it must be less than (the index of 617 in **ℙ**) - 12 = 113 - 12 = 101
-- At a glance, this sequence is at most 100 numbers
+- Intuitively, it must be less than (the index of 617 in **ℙ**) - 1 - 12 = 113 - 12 = 100
+  - To be less than the current lowest value (that of the non-adding primes) at n = 12 means
+    to be less than 617 which is the 113th prime
+    - The 112th prime is the only prime less than the 113th prime
+  - To be less than the 112th prime at n = 12, and for it to be a subset of the primes, the sequence
+    must start no later than the (`112 - 12`)th prime, i.e. the 100th prime.
+- ∴ at a glance, this sequence is at most 100 numbers.
   - This is the 'worst case', it's likely before then - and this should be fairly simple to calculate
 
 The final sequence (let's assume it's the 100th for simplicity) will give the smallest
