@@ -18,7 +18,7 @@ def printer(str, append=True, suffix=None, preflash=False, tee=None, end="\n", t
         print(str)
     return
 
-def take_n_primes(count_i, start_at=2):
+def take_i_primes(count_i, start_at=2):
     primes = [start_at]
     for i in range(count_i):
         primes.append(nextprime(primes[-1]))
@@ -27,7 +27,7 @@ def take_n_primes(count_i, start_at=2):
 default_indexed_seq_length = 8
 
 parser = argparse.ArgumentParser(description="Get summand combinations")
-parser.add_argument("max_n", type=int, help="Max. number of summands to combine")
+parser.add_argument("max_i", type=int, help="Max. number of summands to combine")
 parser.add_argument("-s","--sort", action="store_true", help="Sort sums")
 parser.add_argument("-u","--unique", action="store_true", help="Deduplicate sums")
 parser.add_argument("-e","--emptyset", action="store_true", help="Include empty set")
@@ -38,7 +38,7 @@ if len(sys.argv) == 1:
     args = parser.parse_args(args=all_args)
 else:
     args = parser.parse_args()
-max_n = args.max_n
+max_i = args.max_i
 sort_comb_sums = args.sort
 dedup_comb_sums = args.unique
 show_comb_sums = args.show_comb_sums
@@ -49,11 +49,11 @@ if teeing and args.tee is not True:
 else:
     teefile = None
 
-indexed_seq = take_n_primes(max_n, start_at=3)
+indexed_seq = take_i_primes(max_i, start_at=3)
 # indexed_seq = [3,5,7,11,13,17,19,23]
 
-max_width = sum([len(str(p)) for p in indexed_seq[:max_n]]) + len(indexed_seq[:max_n]) - 1
-max_t_digits = len(str(sum(indexed_seq[:max_n])))
+max_width = sum([len(str(p)) for p in indexed_seq[:max_i]]) + len(indexed_seq[:max_i]) - 1
+max_t_digits = len(str(sum(indexed_seq[:max_i])))
 
 seen_sum_combs = []
 
@@ -66,16 +66,16 @@ def get_all_combs(combinables, with_empty_set=False):
 full_whitespace = " " * max_width
 
 if teeing:
-    tee_file = tee_transform(__file__, suffix=max_n, ext="out")
-    fileprint("", suffix=max_n, preflash=True, file=tee_file, announce=True)
+    tee_file = tee_transform(__file__, suffix=max_i, ext="out")
+    fileprint("", suffix=max_i, preflash=True, file=tee_file, announce=True)
 
 header_str = f"- _( n )_ _tᵢ_ = `Σ{full_whitespace[:-1]}` = _i?_"
 if show_comb_sums:
     header_str += " ⇒ {**s**}"
-printer(header_str, suffix=max_n, tee=teefile, teeing=teeing)
-printer("---", suffix=max_n, tee=teefile, teeing=teeing)
+printer(header_str, suffix=max_i, tee=teefile, teeing=teeing)
+printer("---", suffix=max_i, tee=teefile, teeing=teeing)
 
-for n in range(max_n):
+for n in range(max_i):
     summands = indexed_seq[:n+1]
     sum_str = "+".join(map(repr, summands))
     mask_str = " " * (max_width - len(sum_str))
@@ -118,4 +118,4 @@ for n in range(max_n):
     print_str = f"- _(n={n})_ _p{n_to_subscript(n+1)}_ = `{sum_str}{mask_str}` = {t}{t_mask}"
     if show_comb_sums:
         print_str += f"⇒ {csv}"
-    printer(print_str, suffix=max_n, tee=teefile, teeing=teeing)
+    printer(print_str, suffix=max_i, tee=teefile, teeing=teeing)

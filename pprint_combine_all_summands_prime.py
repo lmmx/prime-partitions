@@ -7,21 +7,21 @@ import argparse
 indexed_seq = [2,3,5,7,11,13,17,19]
 
 if len(sys.argv) == 1:
-    max_n = len(indexed_seq) # 8
+    max_i = len(indexed_seq) # 8
 else:
     parser = argparse.ArgumentParser(description="Get summand combinations")
-    parser.add_argument("max_n", type=int, help="Max. number of summands to combine")
+    parser.add_argument("max_i", type=int, help="Max. number of summands to combine")
     parser.add_argument("-s","--sort", action="store_true", help="Sort sums")
     parser.add_argument("-u","--unique", action="store_true", help="Deduplicate sums")
     parser.add_argument("-e","--emptyset", action="store_true", help="Include empty set")
     args = parser.parse_args()
-    max_n = args.max_n
+    max_i = args.max_i
     sort_comb_sums = args.sort
     dedup_comb_sums = args.unique
     with_empty_set = args.emptyset
 
-max_width = sum([len(str(p)) for p in indexed_seq[:max_n]]) + len(indexed_seq[:max_n]) - 1
-max_t_digits = len(str(sum(indexed_seq[:max_n])))
+max_width = sum([len(str(p)) for p in indexed_seq[:max_i]]) + len(indexed_seq[:max_i]) - 1
+max_t_digits = len(str(sum(indexed_seq[:max_i])))
 
 seen_sum_combs = []
 
@@ -35,7 +35,7 @@ full_whitespace = " " * max_width
 print(f"- _( n )_ _tᵢ_ = `Σ{full_whitespace[:-1]}`" + " = _i?_ ⇒ {**s**}")
 print("---")
 
-for n in range(max_n):
+for n in range(max_i):
     summands = indexed_seq[:n+1]
     sum_str = "+".join(map(repr, summands))
     mask_str = " " * (max_width - len(sum_str))

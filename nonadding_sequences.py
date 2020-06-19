@@ -166,3 +166,4 @@ seq_dict = {
 }
 
 named_seqs = [("A060341", A060341), ("A062547", A062547), ("A000079", A000079), ("NAOPRIM", NAOPRIM)]
+seq_dict = dict(named_seqs)

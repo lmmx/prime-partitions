@@ -542,7 +542,7 @@ python sequence_comparison.py --growth
 ```STDOUT
 -----SEQUENCE GROWTH-------
 Comparing the first 34 terms of all sequences
-i:             A060341        A062547   A000079
+n:             A060341        A062547   A000079
 0:             2              1         1
 1:             3              3         2
 2:             7              5         4
@@ -589,7 +589,7 @@ python sequence_comparison.py --growth --clarify-max
 ```STDOUT
 -----SEQUENCE GROWTH-------
 Comparing the first 34 terms of all sequences
-i:	A060341	A062547	A000079
+n:	A060341	A062547	A000079
 0:	2	—	—
 1:	3	3	—
 2:	7	—	—
@@ -644,7 +644,7 @@ python sequence_comparison.py --growth --clarify-min
 ```STDOUT
 -----SEQUENCE GROWTH-------
 Comparing the first 34 terms of all sequences
-i:             A060341        A062547  A000079
+n:             A060341        A062547  A000079
 0:             —              1        1
 1:             —              —        2
 2:             —              —        4
@@ -797,7 +797,7 @@ Non-adding odd primes: 23
 
 -----SEQUENCE GROWTH-------
 Comparing the first 23 terms of all sequences
-i:	A060341	A062547	A000079	NAOPRIM
+n:	A060341	A062547	A000079	NAOPRIM
 0:	2	1	1	3
 1:	3	3	2	5
 2:	7	5	4	7
@@ -833,7 +833,7 @@ python sequence_comparison.py --growth --clarify-min
 ```STDOUT
 -----SEQUENCE GROWTH-------
 Comparing the first 23 terms of all sequences
-i:	A060341	A062547	A000079	NAOPRIM
+n:	A060341	A062547	A000079	NAOPRIM
 0:	—	1	1	—
 1:	—	—	2	—
 2:	—	—	4	—
@@ -874,7 +874,7 @@ python sequence_comparison.py --growth --clarify-min -p
 ```STDOUT
 -----SEQUENCE GROWTH-------
 Comparing the first 23 terms of all sequences
-i:	A060341	A062547	A000079	NAOPRIM
+n:	A060341	A062547	A000079	NAOPRIM
 0:	2.0⨉	1	1	3.0⨉
 1:	1.5⨉	1.5⨉	2	2.5⨉
 2:	1.8⨉	1.2⨉	4	1.8⨉
@@ -915,7 +915,7 @@ python sequence_comparison.py --growth --clarify-max -p
 ```STDOUT
 -----SEQUENCE GROWTH-------
 Comparing the first 23 terms of all sequences
-i:	A060341	A062547	A000079	NAOPRIM
+n:	A060341	A062547	A000079	NAOPRIM
 0:	66.7%	33.3%	33.3%	3
 1:	60.0%	60.0%	40.0%	5
 2:	7	71.4%	57.1%	7
@@ -950,7 +950,7 @@ python sequence_comparison.py --growth --clarify-min -d
 ```STDOUT
 -----SEQUENCE GROWTH-------
 Comparing the first 23 terms of all sequences
-i:   A060341  A062547  A000079   NAOPRIM
+n:   A060341  A062547  A000079   NAOPRIM
 0:   +1       1        1         +2
 1:   +1       +1       2         +3
 2:   +3       +1       4         +3
@@ -1137,13 +1137,13 @@ done
 ⇣
 
 ```STDOUT
-Writing to results/offsets_n16/pprint_combine_all_summands_offset_prime.py.16.0.out 
-Writing to results/offsets_n16/pprint_combine_all_summands_offset_prime.py.16.1.out 
-Writing to results/offsets_n16/pprint_combine_all_summands_offset_prime.py.16.2.out
+Writing to results/offsets_i16/pprint_combine_all_summands_offset_prime.py.16.0.out 
+Writing to results/offsets_i16/pprint_combine_all_summands_offset_prime.py.16.1.out 
+Writing to results/offsets_i16/pprint_combine_all_summands_offset_prime.py.16.2.out
 ...
-Writing to results/offsets_n16/pprint_combine_all_summands_offset_prime.py.16.98.out
-Writing to results/offsets_n16/pprint_combine_all_summands_offset_prime.py.16.99.out
-Writing to results/offsets_n16/pprint_combine_all_summands_offset_prime.py.16.100.out
+Writing to results/offsets_i16/pprint_combine_all_summands_offset_prime.py.16.98.out
+Writing to results/offsets_i16/pprint_combine_all_summands_offset_prime.py.16.99.out
+Writing to results/offsets_i16/pprint_combine_all_summands_offset_prime.py.16.100.out
 ```
 
 We can then take the last summand (on the last line of each file) and print it out after
@@ -1208,10 +1208,10 @@ creates the sum _p₁₆_ in each of the non-adding sequences of primes:
 - **ℙ** offset 2 (primes starting at `5`) = 2539
 - **ℙ** offset 3 (primes starting at `7`) = 659
 - ...until we reach:
-- **ℙ** offset 96 (primes starting at `509`) = 509
-- **ℙ** offset 97 (primes starting at `521`) = 521
+- **ℙ** offset 96 (primes starting at `509`) = 613
+- **ℙ** offset 97 (primes starting at `521`) = 617
 - ...and we don't need to look any further than _n_ = 97 as the limit value of 617 is the first
-  summand.
+  summand (so it can't possibly do any better than the previous best at `n=15`).
 
 ...but at the end there we can see the sequence is no longer monotonically decreasing!
 The 96'th value (509) is greater than the 97'th value (521), so either we caught just the
@@ -1308,7 +1308,7 @@ done
 Then to check the results we can similarly loop over the `results` subdirectories with `ls -v`
 
 ```sh
-for d in $(ls -dv results/offsets_n*); do
+for d in $(ls -dv results/offsets_i*); do
   echo $d
   cd $d
   for x in `ls -v`; do
@@ -1320,19 +1320,19 @@ done
 ⇣
 
 ```STDOUT
-results/offsets_n12
+results/offsets_i12
 67: 7
-results/offsets_n13
+results/offsets_i13
 73: 8
-results/offsets_n14
+results/offsets_i14
 79: 8
-results/offsets_n15
+results/offsets_i15
 89: 9
-results/offsets_n16
+results/offsets_i16
 101: 10
-results/offsets_n17
+results/offsets_i17
 103: 10
-results/offsets_n18
+results/offsets_i18
 107: 10
 ```
 
@@ -1362,7 +1362,7 @@ The way to test this is to look at the total on the last line rather than the fi
 last line, but we can use a similar script to that for the maximum summand.
 
 From within one of the `results/` subdirectories containing the output files, e.g.
-`results/offsets_n16/` we can run this to give the smallest total and the offset _o_ which produced
+`results/offsets_i16/` we can run this to give the smallest total and the offset _o_ which produced
 it for a given _n_:
 
 ```sh
@@ -1382,10 +1382,10 @@ checking, I just wanted to double check anyway).
 
 Even if so, just to double check for the other values of _n_ let's reuse the loop for all _n_,
 again this one is executed above the results subdirectory and traverses into each subdirectory
-`results/offsets_n*` to check the output files:
+`results/offsets_i*` to check the output files:
 
 ```sh
-for d in $(ls -dv results/offsets_n*); do
+for d in $(ls -dv results/offsets_i*); do
   echo $d
   cd $d
   for x in `ls -v`; do
@@ -1397,21 +1397,328 @@ done
 ⇣
 
 ```STDOUT
-results/offsets_n12
+results/offsets_i12
 510: 7
-results/offsets_n13
+results/offsets_i13
 635: 8
-results/offsets_n14
+results/offsets_i14
 714: 8
-results/offsets_n15
+results/offsets_i15
 863: 9
-results/offsets_n16
+results/offsets_i16
 1032: 10
-results/offsets_n17
+results/offsets_i17
 1135: 10
-results/offsets_n18
+results/offsets_i18
 1242: 10
 ```
 
 So this means that we can actually check either (and so potentially we can choose whichever is
 easiest).
+
+---
+
+Upon reviewing these results more closely, if we define a monotonically decreasing series then
+we _have_ to define at from `i=12` (12 items), if we relax this arbitrary requirement then
+we actually see that the non-adding odd primes (`o=1`) get the smallest results consistently
+from `i=10` (I didn't see this at first as I was focused on the point at which the primes (`o=0`)
+become the best sequence (with the smallest maximum summand/smallest total).
+
+Recall this result above:
+
+```sh
+python sequence_comparison.py --growth --clarify-min
+```
+⇣
+
+```STDOUT
+-----SEQUENCE GROWTH-------
+Comparing the first 23 terms of all sequences
+n:	A060341	A062547	A000079	NAOPRIM
+0:	—	1	1	—
+1:	—	—	2	—
+2:	—	—	4	—
+3:	—	7	—	—
+4:	—	—	—	13
+5:	—	—	—	17
+6:	47	—	—	47
+7:	—	55	—	—
+8:	89	—	—	—
+9:	—	163	—	—
+10:	311	—	—	311
+11:	—	—	—	313
+12:	—	—	—	613
+13:	—	—	—	617
+14:	—	—	—	619
+15:	—	—	—	2777
+16:	—	—	—	3079
+17:	—	—	—	3083
+18:	—	—	—	9239
+19:	—	—	—	9241
+20:	—	—	—	21557
+21:	—	—	—	43117
+22:	—	—	—	61603
+```
+
+This suggests we should actually also calculate `i=10` and `i=11`
+which were not included because without with an offset of 0 the odd numbers provided a
+better base sequence for non-adding primes (i.e. grew more slowly than the non-adding primes)
+at `i=11`.
+
+```STDOUT
+-----SEQUENCE GROWTH-------
+Comparing the first 34 terms of all sequences
+n:             A060341        A062547  A000079
+0:             —              1        1
+1:             —              —        2
+2:             —              —        4
+3:             —              7        —
+4:             —              —        16
+5:             —              19       —
+6:             47             —        —
+7:             —              55       —
+8:             89             —        —
+9:             —              163      —
+10:            311            —        —
+11:            —              487      —
+12:            617            —        —
+13:            919            —        —
+14:            2801           —        —
+15:            3109           —        —
+16:            3413           —        —
+```
+
+This is easily remedied by calculating the offset sequences for `i=10` and `i=11`: in fact we don't
+need to as each larger value of _n_ will contain all the preceding values (the separate directories
+are more for convenience, and because I want to be very careful doing at the larger values of `n`).
+
+But just because it's easy and quick to do the smaller values:
+
+```sh
+for n in {1..11}; do
+  for o in {0..97}; do
+    python pprint_combine_all_summands_offset_prime.py "$n" -o "$o" -t > /dev/null
+  done
+done
+```
+
+...and then the results can be recalculated (tab separating the filenames on the same line as the
+results this time)...
+
+```sh
+for d in $(ls -dv results/offsets_i*); do
+  printf "$d\t"
+  cd $d
+  for x in `ls -v`; do
+    tail -1 $x | cut -d\` -f2 | rev | cut -d\+ -f1 | rev
+  done | awk '{ printf $0": "; print NR-1 }' | sort -n | head -1 | column -t
+  cd - > /dev/null
+done
+```
+⇣
+
+```STDOUT
+results/offsets_i1	2:  0
+results/offsets_i2	3:  0
+results/offsets_i3	7:  0
+results/offsets_i4	11:  0
+results/offsets_i5	13:  1
+results/offsets_i6	17:  1
+results/offsets_i7	29:  3
+results/offsets_i8	37:  4
+results/offsets_i9	43:  5
+results/offsets_i10	47:  5
+results/offsets_i11	61:  6
+results/offsets_i12	67:  7
+results/offsets_i13	73:  8
+results/offsets_i14	79:  8
+results/offsets_i15	89:  9
+results/offsets_i16	101:  10
+results/offsets_i17	103:  10
+results/offsets_i18	107:  10
+```
+
+and the totals:
+
+```
+for d in $(ls -dv results/offsets_i*); do
+  printf "$d\t"
+  cd $d
+  for x in `ls -v`; do
+    tail -1 $x | rev | cut -d\= -f1 | rev | cut -d " " -f2
+  done | awk '{ printf $0": "; print NR-1 }' | sort -n | head -1 | column -t
+  cd - > /dev/null
+done
+```
+⇣
+
+```STDOUT
+results/offsets_i1	2:  0
+results/offsets_i2	5:  0
+results/offsets_i3	12:  0
+results/offsets_i4	23:  0
+results/offsets_i5	39:  1
+results/offsets_i6	56:  1
+results/offsets_i7	103:  1
+results/offsets_i8	180:  4
+results/offsets_i9	253:  5
+results/offsets_i10	300:  5
+results/offsets_i11	401:  6
+results/offsets_i12	510:  7
+results/offsets_i13	635:  8
+results/offsets_i14	714:  8
+results/offsets_i15	863:  9
+results/offsets_i16	1032:  10
+results/offsets_i17	1135:  10
+results/offsets_i18	1242:  10
+```
+
+I'll have to come back to this to do a sequence comparison against the current best
+values and see if any beat those for `i` below 10 (i.e. `n` below 9).
+
+Specifically, recall these results from above (I'll omit the commands):
+
+```STDOUT
+-----SEQUENCE GROWTH-------
+Comparing the first 23 terms of all sequences
+n:	A060341	A062547	A000079	NAOPRIM
+0:	2	1	1	3
+1:	3	3	2	5
+2:	7	5	4	7
+3:	11	7	8	11
+4:	17	17	16	13
+5:	41	19	32	17
+6:	47	53	64	47
+7:	83	55	128	97
+8:	89	161	256	101
+9:	307	163	512	307
+```
+
+What we want now is a table like this, except to put the summands up to the 10th summand
+down each column, and to place the increasing offsets _o_ (from 0 to 97) in columns to the right,
+as we did with the offsets _o_ = 0 and _o_ = 1 (the leftmost and rightmost columns below):
+
+```STDOUT
+-----SEQUENCE GROWTH-------
+Comparing the first 23 terms of all sequences
+n:	A060341	A062547	A000079	NAOPRIM
+0:	—	1	1	—
+1:	—	—	2	—
+2:	—	—	4	—
+3:	—	7	—	—
+4:	—	—	—	13
+5:	—	—	—	17
+6:	47	—	—	47
+7:	—	55	—	—
+8:	89	—	—	—
+9:	—	163	—	—
+```
+
+This is what the program `compare_offset_prime_sequences.py` does.
+
+- To get the first 10 values (from `n=0` to `n=9`) for all offset sequences, we only need to extract
+  the summands from the last line of each offset sequence file in the `results/offsets_i10/` subdirectory
+
+```sh
+python compare_offset_prime_sequences.py 10 
+# python compare_offset_prime_sequences.py 10 | column -t | s
+```
+⇣
+
+```STDOUT
+A062547  A000079  o=0  o=1  o=2  o=3  o=4  o=5  o=6  o=7  o=8  o=9  o=10  o=11  o=12  o=13  o=14
+o=15  o=16  o=17  o=18  o=19  o=20  o=21  o=22  o=23  o=24  o=25  o=26  o=27  o=28  o=29  o=30  o=31
+o=32  o=33  o=34  o=35  o=36  o=37  o=38  o=39  o=40  o=41  o=42  o=43  o=44  o=45  o=46  o=47  o=48
+o=49  o=50  o=51  o=52  o=53  o=54  o=55  o=56  o=57  o=58  o=59  o=60  o=61  o=62  o=63  o=64  o=65
+o=66  o=67  o=68  o=69  o=70  o=71  o=72  o=73  o=74  o=75  o=76  o=77  o=78  o=79  o=80  o=81  o=82
+o=83  o=84  o=85  o=86  o=87  o=88  o=89  o=90  o=91  o=92  o=93  o=94  o=95  o=96  o=97
+1        1        2    3    5    7    11   13   17   19   23   29   31    37    41    43    47    53
+59    61    67    71    73    79    83    89    97    101   103   107   109   113   127   131   137
+139   149   151   157   163   167   173   179   181   191   193   197   199   211   223   227   229
+233   239   241   251   257   263   269   271   277   281   283   293   307   311   313   317   331
+337   347   349   353   359   367   373   379   383   389   397   401   409   419   421   431   433
+439   443   449   457   461   463   467   479   487   491   499   503   509   521
+3        2        3    5    7    11   13   17   19   23   29   31   37    41    43    47    53    59
+61    67    71    73    79    83    89    97    101   103   107   109   113   127   131   137   139
+149   151   157   163   167   173   179   181   191   193   197   199   211   223   227   229   233
+239   241   251   257   263   269   271   277   281   283   293   307   311   313   317   331   337
+347   349   353   359   367   373   379   383   389   397   401   409   419   421   431   433   439
+443   449   457   461   463   467   479   487   491   499   503   509   521   523
+5        4        7    7    11   13   17   19   23   29   31   37   41    43    47    53    59    61
+67    71    73    79    83    89    97    101   103   107   109   113   127   131   137   139   149
+151   157   163   167   173   179   181   191   193   197   199   211   223   227   229   233   239
+241   251   257   263   269   271   277   281   283   293   307   311   313   317   331   337   347
+349   353   359   367   373   379   383   389   397   401   409   419   421   431   433   439   443
+449   457   461   463   467   479   487   491   499   503   509   521   523   541
+7        8        11   11   13   17   19   23   29   31   37   41   43    47    53    59    61    67
+71    73    79    83    89    97    101   103   107   109   113   127   131   137   139   149   151
+157   163   167   173   179   181   191   193   197   199   211   223   227   229   233   239   241
+251   257   263   269   271   277   281   283   293   307   311   313   317   331   337   347   349
+353   359   367   373   379   383   389   397   401   409   419   421   431   433   439   443   449
+457   461   463   467   479   487   491   499   503   509   521   523   541   547
+17       16       17   13   17   19   23   29   31   37   41   43   47    53    59    61    67    71
+73    79    83    89    97    101   103   107   109   113   127   131   137   139   149   151   157
+163   167   173   179   181   191   193   197   199   211   223   227   229   233   239   241   251
+257   263   269   271   277   281   283   293   307   311   313   317   331   337   347   349   353
+359   367   373   379   383   389   397   401   409   419   421   431   433   439   443   449   457
+461   463   467   479   487   491   499   503   509   521   523   541   547   557
+19       32       41   17   19   23   29   31   37   41   43   47   53    59    61    67    71    73
+79    83    89    97    101   103   107   109   113   127   131   137   139   149   151   157   163
+167   173   179   181   191   193   197   199   211   223   227   229   233   239   241   251   257
+263   269   271   277   281   283   293   307   311   313   317   331   337   347   349   353   359
+367   373   379   383   389   397   401   409   419   421   431   433   439   443   449   457   461
+463   467   479   487   491   499   503   509   521   523   541   547   557   563
+53       64       47   47   71   29   31   37   41   43   47   53   59    61    67    71    73    79
+83    89    97    101   103   107   109   113   127   131   137   139   149   151   157   163   167
+173   179   181   191   193   197   199   211   223   227   229   233   239   241   251   257   263
+269   271   277   281   283   293   307   311   313   317   331   337   347   349   353   359   367
+373   379   383   389   397   401   409   419   421   431   433   439   443   449   457   461   463
+467   479   487   491   499   503   509   521   523   541   547   557   563   569
+55       128      83   97   73   97   37   41   43   47   53   59   61    67    71    73    79    83
+89    97    101   103   107   109   113   127   131   137   139   149   151   157   163   167   173
+179   181   191   193   197   199   211   223   227   229   233   239   241   251   257   263   269
+271   277   281   283   293   307   311   313   317   331   337   347   349   353   359   367   373
+379   383   389   397   401   409   419   421   431   433   439   443   449   457   461   463   467
+479   487   491   499   503   509   521   523   541   547   557   563   569   571
+161      256      89   101  79   103  173  43   47   53   59   61   67    71    73    79    83    89
+97    101   103   107   109   113   127   131   137   139   149   151   157   163   167   173   179
+181   191   193   197   199   211   223   227   229   233   239   241   251   257   263   269   271
+277   281   283   293   307   311   313   317   331   337   347   349   353   359   367   373   379
+383   389   397   401   409   419   421   431   433   439   443   449   457   461   463   467   479
+487   491   499   503   509   521   523   541   547   557   563   569   571   577
+163      512      307  307  137  107  179  47   53   59   61   67   71    73    79    83    89    97
+101   103   107   109   113   127   131   137   139   149   151   157   163   167   173   179   181
+191   193   197   199   211   223   227   229   233   239   241   251   257   263   269   271   277
+281   283   293   307   311   313   317   331   337   347   349   353   359   367   373   379   383
+389   397   401   409   419   421   431   433   439   443   449   457   461   463   467   479   487
+491   499   503   509   521   523   541   547   557   563   569   571   577   587
+```
+
+(TBC)
+
+---
+
+(Following is TBC)
+
+So lastly, I'm going to try the higher values of `n`... To speed this up, I want to
+leverage the fact I've already calculated many of the preceding terms, and only want
+the extra ones. This might help avoid the memory overload which led to the crash
+that wiped my entire bootloader...
+
+We could just do this:
+
+```sh
+for n in {19..20}; do
+  if [[ $n -eq 16 ]]; then
+    continue
+  fi
+  for o in {0..97}; do
+    python pprint_combine_all_summands_offset_prime.py "$n" -o "$o" -t
+  done
+done
+```
+
+But that would take a long time, and much of that time would just be iterating
+through the ...
+
+(TBC)

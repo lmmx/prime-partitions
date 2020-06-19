@@ -16,8 +16,8 @@ def printer(ps, append=True, suffix=None, preflash=False, tee=None, end="\n", te
         if tee is None:
             tee = tee_transform(__file__, suffix=suffix, ext="out")
         if tee_to_dir:
-            n_param = suffix[0]  # n is first integer in suffix 2-tuple
-            teedir = Path("results") / f"offsets_n{n_param}"
+            i_param = suffix[0]  # i is first integer in suffix 2-tuple
+            teedir = Path("results") / f"offsets_i{i_param}"
             teedir.mkdir(parents=True, exist_ok=True)
             tee = teedir / tee
         teeprint(ps, append=append, suffix=suffix, preflash=preflash, tee=tee, end=end)
@@ -34,7 +34,7 @@ def get_o_th_prime(o):
     return i_th_prime
 
 
-def take_n_primes(count_i, start_at=2):
+def take_i_primes(count_i, start_at=2):
     primes = [start_at]
     for i in range(count_i):
         primes.append(nextprime(primes[-1]))
@@ -44,7 +44,7 @@ def take_n_primes(count_i, start_at=2):
 default_indexed_seq_length = 8
 
 parser = argparse.ArgumentParser(description="Get summand combinations")
-parser.add_argument("max_n", type=int, help="Max. number of summands to combine")
+parser.add_argument("max_i", type=int, help="Max. number of summands to combine")
 parser.add_argument(
     "-o", "--offset", type=int, default=0, help="Offset on the prime numbers"
 )
@@ -66,14 +66,15 @@ parser.add_argument(
     "-w",
     "--tee-to-wdir",
     action="store_true",
-    help="Store tee file in current working directory (without this flag tee files are stored under a subdirectory named as f'results/offsets{max_n}/')",
+    help="Store tee file in current working directory (without this flag tee files" +
+    " are stored under a subdirectory named f'results/offsets{max_i}/')",
 )
 if len(sys.argv) == 1:
     all_args = sys.argv[1:] + [str(default_indexed_seq_length)]
     args = parser.parse_args(args=all_args)
 else:
     args = parser.parse_args()
-max_n = args.max_n
+max_i = args.max_i
 offset = args.offset
 sort_comb_sums = args.sort
 dedup_comb_sums = args.unique
@@ -87,13 +88,13 @@ else:
     teefile = None
 
 o_th_prime = get_o_th_prime(offset)
-indexed_seq = take_n_primes(max_n, start_at=o_th_prime)
+indexed_seq = take_i_primes(max_i, start_at=o_th_prime)
 # indexed_seq = [3,5,7,11,13,17,19,23]
 
 max_width = (
-    sum([len(str(p)) for p in indexed_seq[:max_n]]) + len(indexed_seq[:max_n]) - 1
+    sum([len(str(p)) for p in indexed_seq[:max_i]]) + len(indexed_seq[:max_i]) - 1
 )
-max_t_digits = len(str(sum(indexed_seq[:max_n])))
+max_t_digits = len(str(sum(indexed_seq[:max_i])))
 
 seen_sum_combs = []
 
@@ -109,12 +110,12 @@ full_whitespace = " " * max_width
 
 if teeing:
     # Only do this for fileprint
-    tee_file = tee_transform(__file__, suffix=(max_n, offset), ext="out")
+    tee_file = tee_transform(__file__, suffix=(max_i, offset), ext="out")
     if tee_to_dir:
-        teedir = Path("results") / f"offsets_n{max_n}"
+        teedir = Path("results") / f"offsets_i{max_i}"
         teedir.mkdir(parents=True, exist_ok=True)
         tee_file = teedir / tee_file
-    fileprint("", suffix=(max_n, offset), preflash=True, file=tee_file, announce=True)
+    fileprint("", suffix=(max_i, offset), preflash=True, file=tee_file, announce=True)
 else:
     # Replace teefile from the parser with tee_file which is either the same as
     # teefile from the parser or contains a constructed file path (possibly with
@@ -126,10 +127,10 @@ if show_comb_sums:
     header_str += " ⇒ {**s**}"
 
 if teeing:
-    printer(header_str, suffix=(max_n, offset), tee=teefile, teeing=teeing, tee_to_dir=tee_to_dir)
-    printer("---", suffix=(max_n, offset), tee=teefile, teeing=teeing, tee_to_dir=tee_to_dir)
+    printer(header_str, suffix=(max_i, offset), tee=teefile, teeing=teeing, tee_to_dir=tee_to_dir)
+    printer("---", suffix=(max_i, offset), tee=teefile, teeing=teeing, tee_to_dir=tee_to_dir)
 
-for n in range(max_n):
+for n in range(max_i):
     summands = indexed_seq[: n + 1]
     sum_str = "+".join(map(repr, summands))
     mask_str = " " * (max_width - len(sum_str))
@@ -174,4 +175,4 @@ for n in range(max_n):
     )
     if show_comb_sums:
         print_str += f"⇒ {csv}"
-    printer(print_str, suffix=(max_n, offset), tee=teefile, teeing=teeing)
+    printer(print_str, suffix=(max_i, offset), tee=teefile, teeing=teeing)

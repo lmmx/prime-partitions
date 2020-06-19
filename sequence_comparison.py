@@ -72,7 +72,7 @@ if compare_growth:
         min_length = max_terms
     print(f"Comparing the first {min_length} terms of all sequences")
     sep = "\t"
-    print(f"i:{sep}" + sep.join([s[0] for s in named_seqs]))
+    print(f"n:{sep}" + sep.join([s[0] for s in named_seqs]))
     for i in range(min_length):
         seq_vals = [seq[1][i] for seq in named_seqs]
         if mask_nonmaxima:
