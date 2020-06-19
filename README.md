@@ -1,28 +1,34 @@
 # Prime partitions
 
-In number theory (and its practical applications in cryptography), prime number factorisation is very important.
+In number theory (and its practical applications in cryptography), prime number factorisation is
+very important.
 
 Prime factorisation involves the 'decomposition' of integers (which by definition cannot be prime)
 as the set of product terms: the 'prime factors' (which by definition must be prime).
 
-[Prime decomposition](https://en.wikipedia.org/wiki/Integer_factorization#Prime_decomposition) is useful because:
+[Prime decomposition](https://en.wikipedia.org/wiki/Integer_factorization#Prime_decomposition) is
+useful because:
 
 > By the fundamental theorem of arithmetic, every positive integer has a unique prime factorization.
 
 ---
 
-An integer partition is an expression of an integer, _t_, as a sum of integers {**s**} (the summands).
+An integer partition is an expression of an integer, _t_, as a sum of integers {**s**} (the
+summands).
 
 - Let **s** denote the vector of summands, and _t_ denote their total.
   - In this document, bold means a vector and italic indicates a scalar value (an integer).
 
-We require that an integer partition is non-empty ({**s**} ≠ ∅), and that an integer in a partition is greater than zero.
+We require that an integer partition is non-empty ({**s**} ≠ ∅), and that an integer in a partition
+is greater than zero.
 
-The trivial partition {_x_} is the singleton set, i.e. where **s** = _x_ (the vector of summands contains a single term).
+The trivial partition {_x_} is the singleton set, i.e. where **s** = _x_ (the vector of summands
+contains a single term).
 
 A _strict partition_ is a partition without duplicate values.
 
-- A _strict integer partition_ is an integer partition in which the summands are a set without duplicate values.
+- A _strict integer partition_ is an integer partition in which the summands are a set without
+  duplicate values.
 
 - Here we are concerned solely with strict partitions and strict sets.
 
@@ -30,13 +36,16 @@ A prime sum _pᵢ_ is the sum of the first _i_ primes.
 
 - E.g. Given _i_ = 3, _pᵢ_ = _p₃_ = 2 + 3 + 5 = 10
 
-- The set of summands _{**sᵢ**}_ for a prime sum _pᵢ_ is an integer partition in which every integer summand is prime.
+- The set of summands _{**sᵢ**}_ for a prime sum _pᵢ_ is an integer partition in which every integer
+  summand is prime.
 
 For reference:
 
-- “The prime numbers”: `{2, 3, 5, 7, 11, 13, 17, 19, ...}` (OEIS⠶[A000040](https://oeis.org/A000040))
+- “The prime numbers”: `{2, 3, 5, 7, 11, 13, 17, 19, ...}`
+  (OEIS⠶[A000040](https://oeis.org/A000040))
 
-- “Sum of the first n primes”: `{2, 5, 10, 17, 28, 41, 58, 77, ...}` (OEIS⠶[A007504](https://oeis.org/A007504))
+- “Sum of the first n primes”: `{2, 5, 10, 17, 28, 41, 58, 77, ...}`
+  (OEIS⠶[A007504](https://oeis.org/A007504))
 
 ---
 
@@ -750,15 +759,20 @@ To break this down into its component parts (I'm not a fan of backslashes in one
   - `-s` says evaluate the first argument in the shell (and print a message of the exit code returned)
 - `date -Iseconds | cut -d\+ -f1 | tr '\n' ' ' | tr 'T' '_';`
   - `date` prints the date and time in ISO format from year all the way down to the current second
-  - `cut` splits the output of `date` on the '+' delimiter and `-f1` retrieves the first element in the split (the date and time part)
+  - `cut` splits the output of `date` on the '+' delimiter and `-f1` retrieves the first element in
+    the split (the date and time part)
   - `tr '\n' ' ' | tr 'T' '_';`
-    - replaces the newline with a space (so that the output of the `tail` command that follows is separated from the `date` output after a space)
-    - replaces the 'T' delimiter in the ISO formatted date and time string (indicating the start of the time portion) with an underscore
-    - ...and the semicolon ends the pipe from `date` but after this there's another command whose output will be conjoined to its output
+    - replaces the newline with a space (so that the output of the `tail` command that follows is
+      separated from the `date` output after a space)
+    - replaces the 'T' delimiter in the ISO formatted date and time string (indicating the start of
+      the time portion) with an underscore
+    - ...and the semicolon ends the pipe from `date` but after this there's another command whose
+      output will be conjoined to its output
 - `tail -1 pprint_combine_all_summands_odd_prime.py.24.out"`
   - prints the last line of the file, i.e. the one whose write (presuming a single line write at a time) triggered `entr`
   - the `"` closes the single argument being passed to the `-s` flag of `entr` for shell (bash) invocation
-- `| sed '/bash returned exit code 0/d'` prevents the exit code message from `entr` being printed along with the `date` and `tail` output
+- `| sed '/bash returned exit code 0/d'` prevents the exit code message from `entr` being printed
+  along with the `date` and `tail` output
 
 Bootloader wipes aside, the result is a list of 23 elements of this sequence, which can now be compared to the non-adding primes
 to see if there may be use in pursuing further terms of this sequence:
@@ -886,10 +900,10 @@ i:	A060341	A062547	A000079	NAOPRIM
 22:	1.7⨉	5.8⨉	68.1⨉	61603
 ```
 
-...which shows (to 1 decimal place) the relative sizes of the non-minimum values relative to the minimum,
-and clarifies that the 'lead' of the non-adding odd primes (_NAOPRIM_) over the non-adding primes
-(beginning `{2,3,7,...}, _A060341_) is significant: the relative size of elements in _A060341_ varies from
-around 1⨉-3⨉ (i.e. 100%-300% the value of the element for the same _n_ in _NAOPRIM_).
+...which shows (to 1 decimal place) the relative sizes of the non-minimum values relative to the
+minimum, and clarifies that the 'lead' of the non-adding odd primes (_NAOPRIM_) over the non-adding
+primes (beginning `{2,3,7,...}, _A060341_) is significant: the relative size of elements in _A060341_
+varies from around 1⨉-3⨉ (i.e. 100%-300% the value of the element for the same _n_ in _NAOPRIM_).
 
 It also gives percentages for the non-maximum values relative to the maximum:
 
@@ -1075,4 +1089,329 @@ of _n_ (so there is no point optimising the machinery for this until that sequen
 
 ---
 
-TBC !
+Next we will iterate multiple sequences in sequence as described above: i.e. we will iterate the offset
+into the primes, for each of which we will calculte the non-adding sequence using the primes offset that
+_o_ as the 'base sequence'.
+
+There is no need to calculate many more than the 12th iteration to tell if it's still monotonically
+decreasing, but since 24 wipes my bootloader I'd suggest 20 as a maximum for now! (I'll fix that later)
+
+- Running the program again with `entr` I can gauge the running time of each step to pick a reasonable _n_.
+
+```sh
+time python pprint_combine_all_summands_odd_prime.py 16 > /dev/null
+```
+⇣
+
+```STDOUT
+real    0m0.993s
+user    0m0.941s
+sys     0m0.052s
+```
+
+One second per offset is a reasonable approach to testing multiple offsets (by our estimate **o**
+has at most 100 values, which would take approx. 100 seconds), so 16 iterations is a good choice
+of parameter for a quick (and low risk!) calculation.
+
+- To restate: there's no need to calculate higher values of _n_ for every offset _o_, only the
+  highest _o_ (which is estimated to be at most 100)
+
+```sh
+echo > pprint_combine_all_summands_odd_prime.py.16.out
+ls pprint_combine_all_summands_odd_prime.py.16.out | entr -p -s "date -Iseconds | cut -d\+ -f1 | tr '\n' ' ' | tr 'T' '_'; tail -1 pprint_combine_all_summands_odd_prime.py.16.out" | sed '/bash returned exit code 0/d'
+```
+
+Then after initialising that, in another terminal pane begin the calculations
+
+- importantly also `time` this, since I find the fast file writes at the start are too soon to be
+  picked up by `entr` (i.e. multiple file opens and file writes occur below the detection threshold
+  time period `entr` polls the file at).
+- However if you take the `time` then you know the total elapsed time, and subsequently can place
+  the individual iteration lengths along a timeline finishing at the total elapsed time.
+
+```sh
+for o in {0..100}; do
+  python pprint_combine_all_summands_offset_prime.py 16 -o "$o" -t > /dev/null
+done
+```
+⇣
+
+```STDOUT
+Writing to results/offsets_n16/pprint_combine_all_summands_offset_prime.py.16.0.out 
+Writing to results/offsets_n16/pprint_combine_all_summands_offset_prime.py.16.1.out 
+Writing to results/offsets_n16/pprint_combine_all_summands_offset_prime.py.16.2.out
+...
+Writing to results/offsets_n16/pprint_combine_all_summands_offset_prime.py.16.98.out
+Writing to results/offsets_n16/pprint_combine_all_summands_offset_prime.py.16.99.out
+Writing to results/offsets_n16/pprint_combine_all_summands_offset_prime.py.16.100.out
+```
+
+We can then take the last summand (on the last line of each file) and print it out after
+its corresponding offset _o_ on the primes **ℙ**:
+
+```sh
+for x in `ls -v`; do
+  tail -1 $x | cut -d\` -f2 | rev | cut -d\+ -f1 | rev
+done | awk '{ printf NR-1": "; print $0 }'
+```
+⇣
+
+```STDOUT
+0: 3109
+1: 2777
+2: 2539
+3: 659
+```
+...
+```STDOUT
+96: 613
+97: 617
+98: 619
+99: 631
+100: 641
+```
+
+- Note that the limit value of 617 is reached at _n_ = 97 (so my quick estimate was off by a couple
+  of positions)
+
+...and we can also check the first summand on the same lines by removing the pair of `rev`
+commands in the line above, to get the first term in the summands list i.e. the prime at
+offset _o_:
+
+```sh
+for x in `ls -v`; do
+  tail -1 $x | cut -d\` -f2 | cut -d\+ -f1
+done | awk '{ printf NR-1": "; print $0 }'
+```
+⇣
+
+```STDOUT
+0: 2
+1: 3
+2: 5
+3: 7
+```
+...
+```
+96: 509
+97: 521
+98: 523
+99: 541
+100: 547
+```
+
+Sod; tail) the 16'th 'new' summand (i.e. the new result at `n=15`), the last term in the sum that
+creates the sum _p₁₆_ in each of the non-adding sequences of primes:
+
+- **ℙ** offset 0 (i.e. base sequence of the primes, `{2,3,5,7,...}`) = 3109
+- **ℙ** offset 1 (i.e. the "non-adding odd primes", base sequence `{3,5,7,...}`) = 2777
+- **ℙ** offset 2 (primes starting at `5`) = 2539
+- **ℙ** offset 3 (primes starting at `7`) = 659
+- ...until we reach:
+- **ℙ** offset 96 (primes starting at `509`) = 509
+- **ℙ** offset 97 (primes starting at `521`) = 521
+- ...and we don't need to look any further than _n_ = 97 as the limit value of 617 is the first
+  summand.
+
+...but at the end there we can see the sequence is no longer monotonically decreasing!
+The 96'th value (509) is greater than the 97'th value (521), so either we caught just the
+point it stops monotonically decreasing, or there was a minimum value before (at a smaller _o_).
+
+If we review the entire sequence, it turns out that the minimum sum was 101 at _o_ = 10:
+
+```STDOUT
+10: 101
+```
+
+and the first prime summand _s₀_ at that offset `o=10` is 31
+
+```STDOUT
+10: 31
+```
+
+i.e. when _o_ is 10, the smallest summand is 31 and the maximum summand is [merely] 101: that's 30
+times smaller than the maximum summand in the original (`o=0`) non-adding primes (`A060341`)!
+
+- That's a huge saving: again, this means the largest integer that must be summed to uniquely
+  identify 16 items is 101 rather than 3101!
+- In turn, that 3101 was an improvement on the powers of 2, for which we'd need to calculate with
+  values as large as `2ⁿ = 2¹⁵` = 32,768.
+- So overall, the largest summand for 16 items has been reduced from 32,768 to just 101: a factor
+  of around 325, just by doing some investigation of the sequences involved.
+
+Two questions remain:
+
+- is the offset of _o_ = 10 into the primes something that consistently gives the best (smallest
+  maximal summand)?
+- ...and does this correspond to the smallest total?
+  - We have so far just assumed that minimal summands will give a minimal total of summands, but
+    note that the primes are not evenly spaced, and so it's entirely possible that some of the
+    sequences of non-adding offset primes will (counterintuitively perhps) have larger totals than
+    others whose maximal summand is larger.
+
+The first of these questions can be simply answered, and the second may mean that we get two
+results: the offset which gives the minimal maximum summand (_sᵢ_) and the offset which gives the minimal
+sum total (_pᵢ_).
+
+- Recall that `i` is `n+1`, the index of the "new" summand at step `n`, from which the non-adding
+  prime sum _pᵢ_ is formed as the sum of the set of summands `{s₀, ..., sᵢ}`.
+
+---
+
+For the first question:
+
+> is the offset of _o_ = 10 into the primes something that consistently gives the best (smallest
+  maximal summand)?
+
+i.e. what if we change _n_, do we get a different best offset for _n_ = 12, or _n_ = 14, or _n_ =
+18? (I'm trying to avoid going higher than _n_ = 20 if possible)
+
+To answer these questions, I can loop over the values of _n_ I want to get answers for,
+and rerun the same commands. However first I just need to get a command which recovers what I
+checked manually at the last step: a command to find offset _o_ with the minimum value for its
+maximal summand _sᵢ_ at the given _n_.
+
+We can do this for _n_ = 16 to recover the value of _o_ which was 10, due to the smallest maximum
+summand of value 101. The easiest way to do this is to just swap the way around that `awk` prints
+the line and the offset, so that you can then `sort -n` numeric sort the line values and read off
+the offset after the colon, the first line of which (retrieved by `head -1`) gives the minimum value.
+
+```sh
+for x in `ls -v`; do
+  tail -1 $x | cut -d\` -f2 | rev | cut -d\+ -f1 | rev
+done | awk '{ printf $0": "; print NR-1 }' | sort -n | head -1
+```
+⇣
+
+```STDOUT
+101: 10
+```
+
+To check this for other values of _n_ I will just run a loop through them then do as for `n=16`:
+
+- since I've already calculated for `n=16` I will skip recalculating it (it would only overwrite the
+  existing results)
+- since I've now discovered the maximum _o_ needed is 97 not 100 I will only increment _o_ to 97
+  this time
+
+```sh
+for n in {12..18}; do
+  if [[ $n -eq 16 ]]; then
+    continue
+  fi
+  for o in {0..97}; do
+    python pprint_combine_all_summands_offset_prime.py "$n" -o "$o" -t > /dev/null
+  done
+done
+```
+
+Then to check the results we can similarly loop over the `results` subdirectories with `ls -v`
+
+```sh
+for d in $(ls -dv results/offsets_n*); do
+  echo $d
+  cd $d
+  for x in `ls -v`; do
+    tail -1 $x | cut -d\` -f2 | rev | cut -d\+ -f1 | rev
+  done | awk '{ printf $0": "; print NR-1 }' | sort -n | head -1
+  cd - > /dev/null
+done
+```
+⇣
+
+```STDOUT
+results/offsets_n12
+67: 7
+results/offsets_n13
+73: 8
+results/offsets_n14
+79: 8
+results/offsets_n15
+89: 9
+results/offsets_n16
+101: 10
+results/offsets_n17
+103: 10
+results/offsets_n18
+107: 10
+```
+
+- Note that it's not possible to get a 'tie' or 'joint best': these are the smallest maximum
+  summands and the offsets into the primes which give rise to those max. summands for the
+  corresponding _n_.
+
+So it seems like the best choice of starting prime (the choice of offset) grows with the depth (i.e.
+with the number of items whose combinations we are seeking to label).
+
+This is disappointing in a way, as it seems like we can't know what the best sequence would be if we
+had a target _n_ (e.g. 30 or 100) for which we wanted to calculate many more elements of the
+sequence.
+
+---
+
+For the second question: putting aside whether the offset gives the smallest maximum summand:
+
+> Does the smallest maximum summand correspond to the smallest total?
+>
+> We have so far just assumed that minimal summands will give a minimal total of summands, but
+> note that the primes are not evenly spaced, and so it's entirely possible that some of the
+> sequences of non-adding offset primes will (counterintuitively perhps) have larger totals than
+> others whose maximal summand is larger.
+
+The way to test this is to look at the total on the last line rather than the final summand on the
+last line, but we can use a similar script to that for the maximum summand.
+
+From within one of the `results/` subdirectories containing the output files, e.g.
+`results/offsets_n16/` we can run this to give the smallest total and the offset _o_ which produced
+it for a given _n_:
+
+```sh
+for x in `ls -v`; do
+  tail -1 $x | rev | cut -d\= -f1 | rev | cut -d " " -f2
+done | awk '{ printf $0": "; print NR-1 }' | sort -n | head -1
+```
+⇣
+
+```STDOUT
+1032: 10
+```
+
+So in the case of `n=16`, yes, we are safe to assume that the smallest maximum summand also
+corresponds to the smallest prime sum (total of all summands). (Actually perhaps this didn't need
+checking, I just wanted to double check anyway).
+
+Even if so, just to double check for the other values of _n_ let's reuse the loop for all _n_,
+again this one is executed above the results subdirectory and traverses into each subdirectory
+`results/offsets_n*` to check the output files:
+
+```sh
+for d in $(ls -dv results/offsets_n*); do
+  echo $d
+  cd $d
+  for x in `ls -v`; do
+    tail -1 $x | rev | cut -d\= -f1 | rev | cut -d " " -f2
+  done | awk '{ printf $0": "; print NR-1 }' | sort -n | head -1
+  cd - > /dev/null
+done
+```
+⇣
+
+```STDOUT
+results/offsets_n12
+510: 7
+results/offsets_n13
+635: 8
+results/offsets_n14
+714: 8
+results/offsets_n15
+863: 9
+results/offsets_n16
+1032: 10
+results/offsets_n17
+1135: 10
+results/offsets_n18
+1242: 10
+```
+
+So this means that we can actually check either (and so potentially we can choose whichever is
+easiest).

@@ -22,6 +22,8 @@ def tee_transform(fname, suffix=None, ext="out"):
     if suffix is not None:
         if type(suffix) is int:
             suffix = repr(suffix)
+        elif type(suffix) is tuple:
+            suffix = ".".join(map(repr, suffix))
         fname += f".{suffix}"
     fname += f".{ext}"
     return fname
