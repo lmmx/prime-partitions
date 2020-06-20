@@ -68,3 +68,10 @@ def demo_print(suffix=34, preflash=True):
     fileprint("", suffix=suffix, preflash=True)
     teeprint("hello", suffix=suffix, end=" ")
     teeprint("world", suffix=suffix, end="\n")
+
+
+def handle_int_str(n):
+    if type(n) is str:
+        return n
+    else:
+        return repr(n)
